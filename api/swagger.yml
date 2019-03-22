@@ -12,11 +12,11 @@ basePath: /api
 
 # Paths supported by the server application
 paths:
-  /sim_synonyms:
+  /knowledgeSim:
     post:
-      operationId: sim_synonyms.compute
+      operationId: controller.POST_synonyms_similarity
       tags:
-        - Model based on synonyms
+        - Model based on knowledge (using synonyms)
       summary: Compute similarity between two sentences.
       description: Compute similarity between two sentences.
       parameters:
@@ -36,11 +36,11 @@ paths:
       responses:
         201:
           description: Successfully
-  /sim_w2v:
+  /corpusSim:
     post:
-      operationId: sim_w2v.compute
+      operationId: controller.POST_w2v_similarity
       tags:
-        - Model based on word2vec
+        - Model based on corpus (using word2vec)
       summary: Compute similarity between two sentences.
       description: Compute similarity between two sentences.
       parameters:
