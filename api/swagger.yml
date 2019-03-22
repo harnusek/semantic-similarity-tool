@@ -12,123 +12,51 @@ basePath: /api
 
 # Paths supported by the server application
 paths:
-  /people:
-    get:
-      operationId: people.read_all
-      tags:
-        - People
-      summary: Read the entire list of people
-      description: Read the list of people
-      parameters:
-        - name: length
-          in: query
-          type: integer
-          description: Number of people to get from people
-          required: false
-        - name: offset
-          in: query
-          type: integer
-          description: Offset from beginning of list where to start gathering people
-          required: false
-      responses:
-        200:
-          description: Successfully read people list operation
-          schema:
-            type: array
-            items:
-              properties:
-                fname:
-                  type: string
-                lname:
-                  type: string
-                timestamp:
-                  type: string
-
+  /sim_synonyms:
     post:
-      operationId: people.create
+      operationId: sim_synonyms.compute
       tags:
-        - People
-      summary: Create a person and add it to the people list
-      description: Create a new person in the people list
+        - Model based on synonyms
+      summary: Compute similarity between two sentences.
+      description: Compute similarity between two sentences.
       parameters:
-        - name: person
+        - name: params
           in: body
-          description: Person to create
+          description: Parameters
           required: True
           schema:
             type: object
             properties:
-              fname:
+              sent1:
                 type: string
-                description: First name of person to create
-              lname:
+                description: First sentence
+              sent2:
                 type: string
-                description: Last name of person to create
+                description: Second sentence
       responses:
         201:
-          description: Successfully created person in list
-
-  /people/{lname}:
-    get:
-      operationId: people.read_one
+          description: Successfully
+  /sim_w2v:
+    post:
+      operationId: sim_w2v.compute
       tags:
-        - People
-      summary: Read one person from the people list
-      description: Read one person from the people list
+        - Model based on word2vec
+      summary: Compute similarity between two sentences.
+      description: Compute similarity between two sentences.
       parameters:
-        - name: lname
-          in: path
-          description: Last name of the person to get from the list
-          type: string
-          required: True
-      responses:
-        200:
-          description: Successfully read person from people list operation
-          schema:
-            properties:
-              fname:
-                type: string
-              lname:
-                type: string
-              timestamp:
-                type: string
-
-    put:
-      operationId: people.update
-      tags:
-        - People
-      summary: Update a person in the people list
-      description: Update a person in the people list
-      parameters:
-        - name: lname
-          in: path
-          description: Last name of the person to update in the list
-          type: string
-          required: True
-        - name: person
+        - name: params
           in: body
+          description: Parameters
+          required: True
           schema:
             type: object
             properties:
-              fname:
+              sent1:
                 type: string
-              lname:
+                description: First sentence
+              sent2:
                 type: string
+                description: Second sentence
       responses:
-        200:
-          description: Successfully updated person in people list
-
-    delete:
-      operationId: people.delete
-      tags:
-        - People
-      summary: Delete a person from the people list
-      description: Delete a person
-      parameters:
-        - name: lname
-          in: path
-          type: string
-          required: True
-      responses:
-        200:
-          description: Successfully deleted a person from people list
+        201:
+          description: Successfully
