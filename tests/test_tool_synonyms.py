@@ -3,7 +3,7 @@ import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'core'))
 from tool_synonyms import synonym_list
 
-class TestStringMethods(unittest.TestCase):
+class TestToolSynonyms(unittest.TestCase):
     def test_get_similarity(self):
         # get_similarity(sent1, sent2)
         pass
