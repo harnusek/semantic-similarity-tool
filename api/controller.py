@@ -17,8 +17,10 @@ def POST_synonyms_similarity(params):
     sent1 = params.get("sent1", None)
     sent2 = params.get("sent2", None)
 
-    if True:
-        return tool_synonyms.get_similarity(sent1,sent2), 201
+    result = tool_synonyms.get_similarity(sent1,sent2)
+
+    if result is not None:
+        return result, 201
     else:
         abort(
             406,
@@ -35,9 +37,10 @@ def POST_w2v_similarity(params):
     sent1 = params.get("sent1", None)
     sent2 = params.get("sent2", None)
 
-    if True:
-        return tool_w2v.get_similarity(sent1,sent2), 201
+    result = tool_w2v.get_similarity(sent1,sent2)
 
+    if result is not None:
+        return result, 201
     else:
         abort(
             406,
