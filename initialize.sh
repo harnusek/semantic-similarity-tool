@@ -5,6 +5,7 @@ pip install connexion
 pip install swagger-ui-bundle
 pip install lxml
 pip install "requests[security]"
+# pip install pyopenssl ndg-httpsclient pyasn1
 # pip install nltk
 echo 'Opening browser.'	
 python -mwebbrowser http://localhost:5000/
