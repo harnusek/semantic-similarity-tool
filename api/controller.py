@@ -1,6 +1,5 @@
-"""
-Controller
-"""
+# -*- coding: utf-8 -*-
+
 import sys, os
 from flask import make_response, abort
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'core'))

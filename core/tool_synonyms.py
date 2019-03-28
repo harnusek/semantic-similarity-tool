@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from . import preprocessing
+import preprocessing
 from lxml import html
 import requests
 from lxml.etree import tostring
@@ -29,7 +29,7 @@ def sim_by_matrix(xList, yList):
     return points
 
 def sim_by_tokens(x,y):
-    if any(elem in synonym_list(x)  for elem in synonym_list(y)):
+    if any(elem in synonym_list(x) for elem in synonym_list(y)):
         return 1
     else:
         return 0
