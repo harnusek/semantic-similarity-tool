@@ -1,4 +1,6 @@
-import preprocessing
+# -*- coding: utf-8 -*-
+
+from . import preprocessing
 from lxml import html
 import requests
 from lxml.etree import tostring
