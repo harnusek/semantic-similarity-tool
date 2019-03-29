@@ -11,8 +11,13 @@ class TestToolSynonyms(unittest.TestCase):
         pass
 
     def test_synonym_list(self):
-        self.assertEqual(synonym_list('N0TD3FIN3D'), [])
-        self.assertEqual(synonym_list('metóda'), ['metóda', 'postup', 'spôsob', 'cesta'])
+        tokens1 = ['N0TD3FIN3D', 'N0N3X1ST']
+        list1 = [[], []]
+        self.assertEqual(list1, synonym_list(tokens1))
+
+        tokens2 = ['metóda']
+        list2 = [['metóda', 'postup', 'spôsob', 'cesta']]
+        self.assertEqual(synonym_list(tokens2), list2)
 
     def test_sim_by_matrix(self):
         # sim_by_matrix(xList, yList)
