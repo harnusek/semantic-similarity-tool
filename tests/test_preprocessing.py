@@ -8,7 +8,7 @@ from preprocessing import tokenize
 class TestPreprocessing(unittest.TestCase):
     def test_tokenize(self):
         self.assertEqual([''], tokenize(''))
-        self.assertEqual(['alfa', 'beta', '?'], tokenize('alfa beta ?'))
+        self.assertEqual(['alfa', 'beta'], tokenize('alfa beta?'))
 
 if __name__ == '__main__':
     unittest.main()

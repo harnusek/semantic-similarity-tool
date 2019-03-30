@@ -55,8 +55,9 @@ class TestToolSynonyms(unittest.TestCase):
 
     def test_get_similarity(self):
         self.assertEqual(1, get_similarity("metóda", "metóda"))
-        # self.assertEqual(0, get_similarity("metóda metóda", "metóda metóda N0TD3FIN3D metóda metóda"))
+        self.assertEqual(0.8, get_similarity("metóda metóda", "metóda metóda N0TD3FIN3D metóda metóda"))
         self.assertEqual(0, get_similarity("metóda", "N0TD3FIN3D"))
+        self.assertEqual(0.0625, get_similarity("My v tom máme jasno. A čo vy?", "Boli ste už voliť?"))
 
 if __name__ == '__main__':
     unittest.main()

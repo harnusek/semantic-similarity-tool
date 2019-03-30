@@ -4,7 +4,6 @@ import preprocessing
 from lxml import html
 import requests
 import pandas as pd
-from lxml.etree import tostring
 
 def get_similarity(sent1,sent2):
     """
@@ -36,22 +35,25 @@ def synonym_dictionary(words):
 def generate_matrices(tokens1, tokens2):
     matrices = list()
     for _ in range(1):
-        matrices.append(pd.DataFrame(columns=tokens1, index=tokens2))
+        df = pd.DataFrame(columns=tokens1, index=tokens2)
+        df = df.apply(pd.to_numeric, errors='coerce')
+        matrices.append(df)
     return matrices
 
 def fill_matrix(matrix, dictionary):
     for col in matrix.columns.values:
         for ind in matrix.index.values:
-            matrix[col][ind] = similarity_tokens(col, ind, dictionary)
+            matrix.loc[ind, col] = similarity_tokens(col, ind, dictionary)
+            # matrix[col][ind] = similarity_tokens(col, ind, dictionary)
     return matrix
 
 def similarity_matrix(matrix):
-    all = matrix.shape[0]*matrix.shape[1]
+    array = matrix.values
     count = 0
-    for col in matrix.columns.values:
-        for ind in matrix.index.values:
-            count = count + matrix[col][ind]
-    return count/all
+    for line in array:
+        for cell in line:
+            count = count + cell
+    return count/array.size
 
 def similarity_tokens(token1, token2, dictionary):
     set1 = set(dictionary[token1])
