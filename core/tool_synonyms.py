@@ -1,22 +1,21 @@
 # -*- coding: utf-8 -*-
 
-import preprocessing
+import common
 from lxml import html
 import requests
-import pandas as pd
 
 def get_similarity(sent1,sent2):
     """
     Return similarity between two sentences
     """
-    tokens1 = preprocessing.tokenize(sent1)
-    tokens2 = preprocessing.tokenize(sent2)
+    tokens1 = common.tokenize(sent1)
+    tokens2 = common.tokenize(sent2)
     words = set(tokens1).union(set(tokens2))
     dictionary = synonym_dictionary(words)
-    matrices = generate_matrices(tokens1, tokens2)
+    matrices = common.generate_matrices(tokens1, tokens2)
     for matrix in matrices:
         matrix = fill_matrix(matrix, dictionary)
-        return similarity_matrix(matrix)
+        return common.similarity_avg(matrix)
 
 def synonym_dictionary(words):
     """
@@ -32,14 +31,6 @@ def synonym_dictionary(words):
         dictionary.update({word: terms})
     return dictionary
 
-def generate_matrices(tokens1, tokens2):
-    matrices = list()
-    for _ in range(1):
-        df = pd.DataFrame(columns=tokens1, index=tokens2)
-        df = df.apply(pd.to_numeric, errors='coerce')
-        matrices.append(df)
-    return matrices
-
 def fill_matrix(matrix, dictionary):
     for col in matrix.columns.values:
         for ind in matrix.index.values:
@@ -47,20 +38,12 @@ def fill_matrix(matrix, dictionary):
             # matrix[col][ind] = similarity_tokens(col, ind, dictionary)
     return matrix
 
-def similarity_matrix(matrix):
-    array = matrix.values
-    count = 0
-    for line in array:
-        for cell in line:
-            count = count + cell
-    return count/array.size
-
 def similarity_tokens(token1, token2, dictionary):
     set1 = set(dictionary[token1])
     set2 = set(dictionary[token2])
     set1.add(token1)
     set2.add(token2)
     if bool(set1 & set2):
-        return 1
+        return 1.0
     else:
-        return 0
+        return 0.0
