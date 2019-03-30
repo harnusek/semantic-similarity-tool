@@ -1,0 +1,8 @@
+flask
+connexion
+swagger-ui-bundle
+lxml
+pandas
+pyopenssl
+ndg-httpsclient
+pyasn1
