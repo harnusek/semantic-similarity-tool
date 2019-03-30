@@ -13,14 +13,13 @@ def get_similarity(sent1,sent2):
     tokens1 = preprocessing.tokenize(sent1)
     tokens2 = preprocessing.tokenize(sent2)
     words = set(tokens1).union(set(tokens2))
-    dictionary = synonym_dict(words)
+    dictionary = synonym_dictionary(words)
     matrices = generate_matrices(tokens1, tokens2)
     for matrix in matrices:
         matrix = fill_matrix(matrix, dictionary)
+        return similarity_matrix(matrix)
 
-    return sim_by_matrix(tokens1, tokens2)
-
-def synonym_dict(words):
+def synonym_dictionary(words):
     """
     Return dictionary of token:synonyms
     """
@@ -41,18 +40,25 @@ def generate_matrices(tokens1, tokens2):
     return matrices
 
 def fill_matrix(matrix, dictionary):
-    matrix = matrix.fillna(0)
+    for col in matrix.columns.values:
+        for ind in matrix.index.values:
+            matrix[col][ind] = similarity_tokens(col, ind, dictionary)
     return matrix
 
-def sim_by_matrix(matrix):
-    points = 0
-    for x in xList:
-        for y in yList:
-            points = points + sim_by_tokens(x,y)
-    return points
+def similarity_matrix(matrix):
+    all = matrix.shape[0]*matrix.shape[1]
+    count = 0
+    for col in matrix.columns.values:
+        for ind in matrix.index.values:
+            count = count + matrix[col][ind]
+    return count/all
 
-def sim_by_tokens(token1, token2, dictionary):
-    if any(elem in synonym_list(x) for elem in synonym_list(y)):
+def similarity_tokens(token1, token2, dictionary):
+    set1 = set(dictionary[token1])
+    set2 = set(dictionary[token2])
+    set1.add(token1)
+    set2.add(token2)
+    if bool(set1 & set2):
         return 1
     else:
         return 0
