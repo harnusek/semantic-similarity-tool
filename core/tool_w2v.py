@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import preprocessing
+import common
 import time
 
 def get_similarity(sent1,sent2):

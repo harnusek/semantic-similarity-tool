@@ -39,6 +39,7 @@ class TestToolSynonyms(unittest.TestCase):
         self.assertEqual(0.8, get_similarity("metóda metóda", "metóda metóda N0TD3FIN3D metóda metóda"))
         self.assertEqual(0, get_similarity("metóda", "N0TD3FIN3D"))
         self.assertEqual(0.0625, get_similarity("My v tom máme jasno. A čo vy?", "Boli ste už voliť?"))
+        self.assertEqual(0.2, get_similarity("Compute similarity between two sentences.","Compute similarity between two sentences."))
 
 if __name__ == '__main__':
     unittest.main()
