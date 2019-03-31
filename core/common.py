@@ -9,7 +9,14 @@ def avg_list(list):
 def tokenize(sent):
     response = requests.post(url='http://text.fiit.stuba.sk:8080/lematizer/services/lemmatizer/lemmatize/fast', data=sent.encode('utf-8'))
     str = response.content.decode("utf-8")
-    return str.split(' ')
+    tokens = str.split(' ')
+    return tokens
+
+def remove_stop_words(words):
+    with open('core/data/stop_words_SK.txt', 'r', encoding='utf-8') as file:
+        stop_words = [word.rstrip() for word in file]
+        filtered_words = [word for word in words if word not in stop_words]
+        return filtered_words
 
 def generate_matrices(tokens1, tokens2): # TODO pos tags
     matrices = list()

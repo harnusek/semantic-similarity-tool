@@ -8,8 +8,14 @@ from common import avg_list
 from common import tokenize
 from common import generate_matrices
 from common import similarity_avg
+from common import remove_stop_words
 
 class TestCommon(unittest.TestCase):
+
+    def test_remove_stop_words(self):
+        os.chdir('..')
+        self.assertEqual(['1', '2'], remove_stop_words(['1', '2','a']))
+
     def test_tokenize(self):
         self.assertEqual([''], tokenize(''))
         self.assertEqual(['alfa', 'beta'], tokenize('alfa beta?'))

@@ -34,7 +34,7 @@ class TestKnowledgeMethods(unittest.TestCase):
         self.assertEqual(0, similarity_tokens('N0TD3FIN3D', 'metóda', dictionary))
         self.assertEqual(0, similarity_tokens('N0TD3FIN3D', 'N0N3X1ST', dictionary))
 
-    def test_get_similarity(self):
+    def test_similarity_sentences(self):
         self.assertEqual(1, similarity_sentences("metóda", "metóda"))
         self.assertEqual(0.8, similarity_sentences("metóda metóda", "metóda metóda N0TD3FIN3D metóda metóda"))
         self.assertEqual(0, similarity_sentences("metóda", "N0TD3FIN3D"))
