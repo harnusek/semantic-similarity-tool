@@ -4,12 +4,12 @@ import unittest
 import pandas as pd
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'core'))
-from tool_synonyms import synonym_dictionary
-from tool_synonyms import fill_matrix
-from tool_synonyms import similarity_tokens
-from tool_synonyms import get_similarity
+from knowledge_methods import synonym_dictionary
+from knowledge_methods import fill_matrix
+from knowledge_methods import similarity_tokens
+from knowledge_methods import similarity_sentences
 
-class TestToolSynonyms(unittest.TestCase):
+class TestKnowledgeMethods(unittest.TestCase):
     def test_synonym_dictionary(self):
         tokens1 = ['N0TD3FIN3D', 'N0N3X1ST']
         dict1 = {'N0TD3FIN3D':[], 'N0N3X1ST':[]}
@@ -35,11 +35,11 @@ class TestToolSynonyms(unittest.TestCase):
         self.assertEqual(0, similarity_tokens('N0TD3FIN3D', 'N0N3X1ST', dictionary))
 
     def test_get_similarity(self):
-        self.assertEqual(1, get_similarity("metóda", "metóda"))
-        self.assertEqual(0.8, get_similarity("metóda metóda", "metóda metóda N0TD3FIN3D metóda metóda"))
-        self.assertEqual(0, get_similarity("metóda", "N0TD3FIN3D"))
-        self.assertEqual(0.0625, get_similarity("My v tom máme jasno. A čo vy?", "Boli ste už voliť?"))
-        self.assertEqual(0.2, get_similarity("Compute similarity between two sentences.","Compute similarity between two sentences."))
+        self.assertEqual(1, similarity_sentences("metóda", "metóda"))
+        self.assertEqual(0.8, similarity_sentences("metóda metóda", "metóda metóda N0TD3FIN3D metóda metóda"))
+        self.assertEqual(0, similarity_sentences("metóda", "N0TD3FIN3D"))
+        self.assertEqual(0.0625, similarity_sentences("My v tom máme jasno. A čo vy?", "Boli ste už voliť?"))
+        self.assertEqual(0.2, similarity_sentences("Compute similarity between two sentences.","Compute similarity between two sentences."))
 
 if __name__ == '__main__':
     unittest.main()

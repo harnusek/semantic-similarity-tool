@@ -4,7 +4,7 @@ import common
 from lxml import html
 import requests
 
-def get_similarity(sent1,sent2):
+def similarity_sentences(sent1,sent2):
     """
     Return similarity between two sentences
     """
@@ -13,9 +13,9 @@ def get_similarity(sent1,sent2):
     words = set(tokens1).union(set(tokens2))
     dictionary = synonym_dictionary(words)
     matrices = common.generate_matrices(tokens1, tokens2)
-    for matrix in matrices:
-        matrix = fill_matrix(matrix, dictionary)
-        return common.similarity_avg(matrix)
+    matrices = [fill_matrix(matrix, dictionary) for matrix in matrices]
+    sim_list = [common.similarity_avg(matrix) for matrix in matrices]
+    return common.avg_list(sim_list)
 
 def synonym_dictionary(words):
     """

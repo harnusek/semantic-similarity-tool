@@ -3,8 +3,8 @@
 import sys, os
 from flask import make_response, abort
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'core'))
-import tool_synonyms
-import tool_w2v
+import knowledge_methods
+import corpus_methods
 
 def POST_synonyms_similarity(params):
     """
@@ -16,7 +16,7 @@ def POST_synonyms_similarity(params):
     sent1 = params.get("sent1", None)
     sent2 = params.get("sent2", None)
 
-    result = tool_synonyms.get_similarity(sent1,sent2)
+    result = knowledge_methods.similarity_sentences(sent1,sent2)
 
     if result is not None:
         return result, 201
@@ -36,7 +36,7 @@ def POST_w2v_similarity(params):
     sent1 = params.get("sent1", None)
     sent2 = params.get("sent2", None)
 
-    result = tool_w2v.get_similarity(sent1,sent2)
+    result = corpus_methods.similarity_sentences(sent1,sent2)
 
     if result is not None:
         return result, 201

@@ -4,6 +4,7 @@ import unittest
 import sys, os
 import pandas as pd
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'core'))
+from common import avg_list
 from common import tokenize
 from common import generate_matrices
 from common import similarity_avg
@@ -12,6 +13,11 @@ class TestCommon(unittest.TestCase):
     def test_tokenize(self):
         self.assertEqual([''], tokenize(''))
         self.assertEqual(['alfa', 'beta'], tokenize('alfa beta?'))
+
+    def test_avg_list(self):
+        self.assertEqual(0, avg_list([0]))
+        self.assertEqual(9, avg_list([9]))
+        self.assertEqual(2, avg_list([0, 1, 2, 3, 4]))
 
     def test_generate_matrices(self):
         tokens1 = ["ako","si","starý"]
