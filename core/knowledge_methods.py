@@ -3,6 +3,9 @@
 import common
 from lxml import html
 import requests
+import json
+import io
+import threading
 
 def similarity_sentences(sent1,sent2):
     """
@@ -21,8 +24,9 @@ def synonym_dictionary(words):
     """
     Return dictionary of token:synonyms
     """
-    dictionary = dict()
     for word in words:
+        if(word in dictionary):
+            break
         url = 'https://slovnik.azet.sk/synonyma/?q=' + word
         page = requests.get(url)
         tree = html.fromstring(page.content)
@@ -47,3 +51,21 @@ def similarity_tokens(token1, token2, dictionary):
         return 1.0
     else:
         return 0.0
+
+def load_dictionary():
+    try:
+        with open('core/data/synonym_dictionary.json', 'r', encoding="utf8") as json_file:
+            json_str = json_file.read()
+            return json.loads(json_str)
+    except FileNotFoundError:
+        return dict()
+
+
+def save_dictionary():
+    threading.Timer(60.0, save_dictionary).start()
+    with io.open('core/data/synonym_dictionary.json', 'w', encoding='utf8') as json_file:
+        json.dump(dictionary, json_file, ensure_ascii=False)
+    print('[SAVE] synonym_dictionary.json')
+
+dictionary = load_dictionary()
+save_dictionary()

@@ -8,6 +8,8 @@ from knowledge_methods import synonym_dictionary
 from knowledge_methods import fill_matrix
 from knowledge_methods import similarity_tokens
 from knowledge_methods import similarity_sentences
+from knowledge_methods import load_dictionary
+from knowledge_methods import save_dictionary
 
 class TestKnowledgeMethods(unittest.TestCase):
     def test_synonym_dictionary(self):
@@ -40,6 +42,17 @@ class TestKnowledgeMethods(unittest.TestCase):
         self.assertEqual(0, similarity_sentences("metóda", "N0TD3FIN3D"))
         self.assertEqual(0.0625, similarity_sentences("My v tom máme jasno. A čo vy?", "Boli ste už voliť?"))
         self.assertEqual(0.2, similarity_sentences("Compute similarity between two sentences.","Compute similarity between two sentences."))
+
+    def test_load_dictionary(self):
+        self.skipTest('Is not testable')
+        os.chdir('..')
+        # self.assertEqual(dict(), load_dictionary())
+        print(load_dictionary())
+
+    def test_save_dictionary(self):
+        self.skipTest('Is not testable')
+        os.chdir('..')
+        save_dictionary()
 
 if __name__ == '__main__':
     unittest.main()
