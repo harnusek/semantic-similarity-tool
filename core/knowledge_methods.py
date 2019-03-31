@@ -26,7 +26,7 @@ def synonym_dictionary(words):
     """
     for word in words:
         if(word in dictionary):
-            break
+            continue
         url = 'https://slovnik.azet.sk/synonyma/?q=' + word
         page = requests.get(url)
         tree = html.fromstring(page.content)
@@ -62,7 +62,7 @@ def load_dictionary():
 
 
 def save_dictionary():
-    threading.Timer(60.0, save_dictionary).start()
+    threading.Timer(300.0, save_dictionary).start()
     with io.open('core/data/synonym_dictionary.json', 'w', encoding='utf8') as json_file:
         json.dump(dictionary, json_file, ensure_ascii=False)
     print('[SAVE] synonym_dictionary.json')
