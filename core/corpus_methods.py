@@ -2,17 +2,13 @@
 
 import common
 from gensim.models.keyedvectors import KeyedVectors
-# import nltk
-# import gensim
-# from gensim import corpora, models, similarities
-import  os
+
 def similarity_sentences(sent1,sent2): # TODO
     """
     Return similarity between two sentences
     """
     tokens1 = common.tokenize(sent1)
     tokens2 = common.tokenize(sent2)
-    model = load_model()
     matrices = common.generate_matrices(tokens1, tokens2)
     matrices = [fill_matrix(matrix, model) for matrix in matrices]
     sim_list = [common.similarity_avg(matrix) for matrix in matrices]
@@ -36,3 +32,5 @@ def similarity_tokens(token1, token2, model):
     except KeyError:
         sim = 0
     return sim
+
+model = load_model()
