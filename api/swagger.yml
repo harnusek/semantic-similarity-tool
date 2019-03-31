@@ -16,7 +16,7 @@ paths:
     post:
       operationId: controller.POST_synonyms_similarity
       tags:
-        - Model based on knowledge (using synonyms)
+        - Model based on knowledge
       summary: Compute similarity between two sentences.
       description: Compute similarity between two sentences.
       parameters:
@@ -40,7 +40,7 @@ paths:
     post:
       operationId: controller.POST_w2v_similarity
       tags:
-        - Model based on corpus (using word2vec)
+        - Model based on corpus
       summary: Compute similarity between two sentences.
       description: Compute similarity between two sentences.
       parameters:
