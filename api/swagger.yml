@@ -12,6 +12,16 @@ basePath: /api
 
 # Paths supported by the server application
 paths:
+  /health:
+    get:
+      operationId: controller.GET_health
+      tags:
+        - Health check.
+      summary: Health check.
+      description: Health check.
+      responses:
+        201:
+          description: Successfully
   /knowledgeSim:
     post:
       operationId: controller.POST_synonyms_similarity

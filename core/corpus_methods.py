@@ -3,10 +3,9 @@
 import common
 from gensim.models.keyedvectors import KeyedVectors
 import os
-from gensim.test.utils import common_texts, get_tmpfile
 from gensim.models import Word2Vec
 
-def similarity_sentences(sent1,sent2): # TODO
+def similarity_sentences(sent1,sent2):
     """
     Return similarity between two sentences
     """
@@ -31,13 +30,14 @@ def fill_matrix(matrix, model):
 
 def similarity_tokens(token1, token2, model):
     try:
-        sim = model.similarity(token1, token2)
+        sim = model.wv.similarity(token1, token2)
     except KeyError:
         sim = 0
     return sim
 
 def generate_model():
-    print(common_texts)
+    texts = [['dom', 'byt']]
+    model = Word2Vec(texts, size=2, window=1, min_count=1, workers=4)
     return model
 
 if(os.getcwd().split(os.sep)[-1] != 'tests'):

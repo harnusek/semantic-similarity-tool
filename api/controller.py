@@ -45,3 +45,19 @@ def POST_w2v_similarity(params):
             406,
             "Something went wrong",
         )
+
+def GET_health():
+    """
+    Health check.
+
+    :return:        201 on success, 406 on fail
+    """
+
+    result = True
+    if result is not None:
+        return result, 201
+    else:
+        abort(
+            406,
+            "Something went wrong",
+        )
