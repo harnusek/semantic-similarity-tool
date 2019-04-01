@@ -18,6 +18,7 @@ class TestCommon(unittest.TestCase):
 
     def test_tokenize(self):
         self.assertEqual([''], tokenize(''))
+        self.assertEqual(['mama', 'alebo', 'nemať'], tokenize('mám, alebo nemám!'))
         self.assertEqual(['alfa', 'beta'], tokenize('alfa beta?'))
 
     def test_avg_list(self):

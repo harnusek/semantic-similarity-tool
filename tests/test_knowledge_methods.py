@@ -10,13 +10,15 @@ from knowledge_methods import similarity_tokens
 from knowledge_methods import similarity_sentences
 from knowledge_methods import load_dictionary
 from knowledge_methods import save_dictionary
+from knowledge_methods import delete_dictionary
 
 class TestKnowledgeMethods(unittest.TestCase):
     def test_synonym_dictionary(self):
+        delete_dictionary()
         tokens1 = ['N0TD3FIN3D', 'N0N3X1ST']
         dict1 = {'N0TD3FIN3D':[], 'N0N3X1ST':[]}
         self.assertEqual(dict1, synonym_dictionary(tokens1))
-
+        delete_dictionary()
         tokens2 = ['metóda']
         dict2 = {'metóda':['metóda', 'postup', 'spôsob', 'cesta']}
         self.assertEqual(dict2, synonym_dictionary(tokens2))

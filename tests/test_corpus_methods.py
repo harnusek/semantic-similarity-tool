@@ -9,7 +9,7 @@ from corpus_methods import similarity_sentences
 from corpus_methods import fill_matrix
 from corpus_methods import similarity_tokens
 from corpus_methods import load_model
-
+generate_model
 class TestCorpusMethods(unittest.TestCase):
     def test_fill_matrix(self):
         os.chdir('..')
@@ -35,5 +35,7 @@ class TestCorpusMethods(unittest.TestCase):
         model = load_model()
         self.assertTrue(isinstance(model, Word2VecKeyedVectors))
 
+    def test(self):
+        print(generate_model())
 if __name__ == '__main__':
     unittest.main()

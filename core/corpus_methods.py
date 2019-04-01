@@ -2,6 +2,9 @@
 
 import common
 from gensim.models.keyedvectors import KeyedVectors
+import os
+from gensim.test.utils import common_texts, get_tmpfile
+from gensim.models import Word2Vec
 
 def similarity_sentences(sent1,sent2): # TODO
     """
@@ -33,4 +36,11 @@ def similarity_tokens(token1, token2, model):
         sim = 0
     return sim
 
-model = load_model()
+def generate_model():
+    print(common_texts)
+    return model
+
+if(os.getcwd().split(os.sep)[-1] != 'tests'):
+    model = load_model()
+else:
+    model = generate_model()

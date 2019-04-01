@@ -6,6 +6,7 @@ import requests
 import json
 import io
 import threading
+import os
 
 def similarity_sentences(sent1,sent2):
     """
@@ -67,5 +68,10 @@ def save_dictionary():
         json.dump(dictionary, json_file, ensure_ascii=False)
     print('[SAVE] synonym_dictionary.json')
 
-dictionary = load_dictionary()
-save_dictionary()
+def delete_dictionary():
+    dictionary.clear()
+
+dictionary = dict()
+if(os.getcwd().split(os.sep)[-1] != 'tests'):
+    dictionary = load_dictionary()
+    save_dictionary()
