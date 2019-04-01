@@ -9,6 +9,7 @@ from common import tokenize
 from common import generate_matrices
 from common import similarity_avg
 from common import remove_stop_words
+from common import similarity_X
 
 class TestCommon(unittest.TestCase):
 
@@ -42,6 +43,16 @@ class TestCommon(unittest.TestCase):
         self.assertEqual(0.5, similarity_avg(matrix2))
         self.assertEqual(0.5, similarity_avg(matrix3))
         self.assertEqual(0.5, similarity_avg(matrix4))
+
+    def test_similarity_X(self):
+        matrix1 = pd.DataFrame([[1]])
+        matrix2 = pd.DataFrame([[1,0]])
+        matrix3 = pd.DataFrame([[1,0],[1,0]])
+        matrix4 = pd.DataFrame([[1,0,1],[1,0,0]])
+        self.assertEqual(1, similarity_X(matrix1))
+        self.assertEqual(1, similarity_X(matrix2))
+        self.assertEqual(1, similarity_X(matrix3))
+        self.assertEqual(1, similarity_X(matrix4))
 
 if __name__ == '__main__':
     unittest.main()

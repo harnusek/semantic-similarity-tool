@@ -33,3 +33,10 @@ def similarity_avg(matrix):
         for cell in line:
             count = count + cell
     return count/array.size
+
+def similarity_X(matrix):
+    array = matrix.values
+    count = 0
+    for line in array:
+        count = count+max(line)
+    return count/len(array)
