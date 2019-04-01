@@ -1,23 +1,32 @@
 import unittest
-import os
 import requests
+import json
 
 class TestApi(unittest.TestCase):
-    def test_connectiom(self):
-        url = 'http://localhost:5000/'
-        # response = requests.post(url=url, data=sent.encode('utf-8'))
+    """
+    Requires running server
+    """
+    def test_knowledgeSim(self):
+        url = 'http://localhost:5000/api/knowledgeSim'
+        data = {
+            "sent_1": "dom strom",
+            "sent_2": "stromec budova"
+        }
+        headers = {'content-type': 'application/json'}
+        response = requests.post(url, data=json.dumps(data), headers=headers)
+        sim = float(response.content)
+        self.assertEqual(0.5, sim)
 
-        page = requests.get(url)
-        print(page.content)
-        return
-        print(os.getcwd())
-        os.chdir("..")
-        os.system("python -c \"print('666')\"")
-        os.system("ls")
-        return
-        print(os.getcwd())
-        self.assertEqual(True, False)
-
+    def test_corpusSim(self):
+        url = 'http://localhost:5000/api/corpusSim'
+        data = {
+            "sent_1": "dom strom",
+            "sent_2": "stromec budova"
+        }
+        headers = {'content-type': 'application/json'}
+        response = requests.post(url, data=json.dumps(data), headers=headers)
+        sim = float(response.content)
+        self.assertEqual(0.2767875757999718, sim)
 
 if __name__ == '__main__':
     unittest.main()

@@ -29,13 +29,13 @@ class TestCorpusMethods(unittest.TestCase):
         self.assertEqual(0.5, similarity_sentences('dom UND3FIN3D', 'dom'))
 
     def test_load_model(self):
-        self.skipTest('Not testable')
+        self.skipTest('test_load_model')
         os.chdir('..')
         model = load_model()
         self.assertTrue(isinstance(model, Word2VecKeyedVectors))
 
     def test_generate_model(self):
-        self.skipTest('Not testable')
+        self.skipTest('test_generate_model')
         print(generate_model())
 
 if __name__ == '__main__':

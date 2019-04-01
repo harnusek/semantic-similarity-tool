@@ -2,10 +2,10 @@
 Main module of the server file
 """
 
-# 3rd party moudles
 from flask import render_template
 import connexion
-
+import logging
+from logging.handlers import RotatingFileHandler
 
 # Create the application instance
 app = connexion.App(__name__, specification_dir="./")
@@ -27,4 +27,7 @@ def home():
 
 
 if __name__ == "__main__":
+    # handler = RotatingFileHandler('logs.log', maxBytes=10000, backupCount=1)
+    # handler.setLevel(logging.INFO)
+    # app.app.logger.addHandler(handler)
     app.run(debug=True)

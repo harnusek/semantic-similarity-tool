@@ -46,13 +46,13 @@ class TestKnowledgeMethods(unittest.TestCase):
         self.assertEqual(0.2, similarity_sentences("Compute similarity between two sentences.","Compute similarity between two sentences."))
 
     def test_load_dictionary(self):
-        self.skipTest('Is not testable')
+        self.skipTest('test_load_dictionary')
         os.chdir('..')
         # self.assertEqual(dict(), load_dictionary())
         print(load_dictionary())
 
     def test_save_dictionary(self):
-        self.skipTest('Is not testable')
+        self.skipTest('test_save_dictionary')
         os.chdir('..')
         save_dictionary()
 

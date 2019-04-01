@@ -1,8 +1,9 @@
 swagger: "2.0"
 info:
-  description: This is the swagger file that goes with our server code
+  description: A methods for determining the similarity of texts
+
   version: "1.0.0"
-  title: Swagger Rest Article
+  title: Semantic similarity of texts - API
 consumes:
   - application/json
 produces:
@@ -12,21 +13,11 @@ basePath: /api
 
 # Paths supported by the server application
 paths:
-  /health:
-    get:
-      operationId: controller.GET_health
-      tags:
-        - Health check.
-      summary: Health check.
-      description: Health check.
-      responses:
-        201:
-          description: Successfully
   /knowledgeSim:
     post:
-      operationId: controller.POST_synonyms_similarity
+      operationId: controller.POST_knowledge_similarity
       tags:
-        - Model based on knowledge
+        - Method based on knowledge
       summary: Compute similarity between two sentences.
       description: Compute similarity between two sentences.
       parameters:
@@ -37,20 +28,26 @@ paths:
           schema:
             type: object
             properties:
-              sent1:
+              sent_1:
                 type: string
                 description: First sentence
-              sent2:
+              sent_2:
                 type: string
                 description: Second sentence
+              remove_stop_words:
+                type: boolean
+                description: Remove stop words?
+            required:
+              - sent_1
+              - sent_2
       responses:
         201:
           description: Successfully
   /corpusSim:
     post:
-      operationId: controller.POST_w2v_similarity
+      operationId: controller.POST_corpus_similarity
       tags:
-        - Model based on corpus
+        - Method based on corpus
       summary: Compute similarity between two sentences.
       description: Compute similarity between two sentences.
       parameters:
@@ -61,12 +58,15 @@ paths:
           schema:
             type: object
             properties:
-              sent1:
+              sent_1:
                 type: string
                 description: First sentence
-              sent2:
+              sent_2:
                 type: string
                 description: Second sentence
+            required:
+              - sent_1
+              - sent_2
       responses:
         201:
           description: Successfully
