@@ -5,15 +5,16 @@ from gensim.models.keyedvectors import KeyedVectors
 import os
 from gensim.models import Word2Vec
 
-def similarity_sentences(sent1,sent2):
+def similarity_sentences(sent_1,sent_2, del_stop=False, use_pos=False, use_lem=False):
     """
     Return similarity between two sentences
     """
-    tokens1 = common.tokenize(sent1)
-    tokens2 = common.tokenize(sent2)
+    # all = common.preprocessing(sent_1,sent_2, del_stop, use_pos, use_lem)
+    tokens1 = common.lemmatization(sent_1)
+    tokens2 = common.lemmatization(sent_2)
     matrices = common.generate_matrices(tokens1, tokens2)
     matrices = [fill_matrix(matrix, model) for matrix in matrices]
-    sim_list = [common.similarity_avg(matrix) for matrix in matrices]
+    sim_list = [similarity_matrix_avg(matrix) for matrix in matrices]
     return common.avg_list(sim_list)
 
 def load_model():
@@ -34,6 +35,21 @@ def similarity_tokens(token1, token2, model):
     except KeyError:
         sim = 0
     return sim
+
+def similarity_matrix_avg(matrix):
+    array = matrix.values
+    count = 0
+    for line in array:
+        for cell in line:
+            count = count + cell
+    return count/array.size
+
+def similarity_matrix_X(matrix):
+    array = matrix.values
+    count = 0
+    for line in array:
+        count = count+max(line)
+    return count/len(array)
 
 def generate_model():
     texts = [['dom', 'byt']]

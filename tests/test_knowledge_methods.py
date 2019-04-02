@@ -4,24 +4,21 @@ import unittest
 import pandas as pd
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'core'))
-from knowledge_methods import synonym_dictionary
+from knowledge_methods import update_dictionary
 from knowledge_methods import fill_matrix
 from knowledge_methods import similarity_tokens
 from knowledge_methods import similarity_sentences
-from knowledge_methods import load_dictionary
-from knowledge_methods import save_dictionary
-from knowledge_methods import delete_dictionary
+from knowledge_methods import similarity_matrix_avg
+from knowledge_methods import similarity_matrix_X
 
 class TestKnowledgeMethods(unittest.TestCase):
-    def test_synonym_dictionary(self):
-        delete_dictionary()
-        tokens1 = ['N0TD3FIN3D', 'N0N3X1ST']
-        dict1 = {'N0TD3FIN3D':[], 'N0N3X1ST':[]}
-        self.assertEqual(dict1, synonym_dictionary(tokens1))
-        delete_dictionary()
-        tokens2 = ['metóda']
+    def test_update_dictionary(self):
+        token1 = 'N0TD3FIN3D'
+        dict1 = {'N0TD3FIN3D':[]}
+        self.assertEqual(dict1, update_dictionary(dict(),token1))
+        token2 = 'metóda'
         dict2 = {'metóda':['metóda', 'postup', 'spôsob', 'cesta']}
-        self.assertEqual(dict2, synonym_dictionary(tokens2))
+        self.assertEqual(dict2, update_dictionary(dict(), token2))
 
     def test_fill_matrix(self):
         matrix1 = pd.DataFrame(columns=["dom", "je"], index=["byt"]).apply(pd.to_numeric, errors='coerce')
@@ -45,16 +42,28 @@ class TestKnowledgeMethods(unittest.TestCase):
         self.assertEqual(0.0625, similarity_sentences("My v tom máme jasno. A čo vy?", "Boli ste už voliť?"))
         self.assertEqual(0.2, similarity_sentences("Compute similarity between two sentences.","Compute similarity between two sentences."))
 
-    def test_load_dictionary(self):
-        self.skipTest('test_load_dictionary')
-        os.chdir('..')
-        # self.assertEqual(dict(), load_dictionary())
-        print(load_dictionary())
 
-    def test_save_dictionary(self):
-        self.skipTest('test_save_dictionary')
-        os.chdir('..')
-        save_dictionary()
+    def test_similarity_matrix_avg(self):
+        matrix1 = pd.DataFrame([[1]])
+        matrix2 = pd.DataFrame([[1,0]])
+        matrix3 = pd.DataFrame([[1,0],[1,0]])
+        matrix4 = pd.DataFrame([[1,0,1],[1,0,0]])
+        self.assertEqual(1, similarity_matrix_avg(matrix1))
+        self.assertEqual(0.5, similarity_matrix_avg(matrix2))
+        self.assertEqual(0.5, similarity_matrix_avg(matrix3))
+        self.assertEqual(0.5, similarity_matrix_avg(matrix4))
+
+    def test_similarity_matrix_X(self):
+        matrix0 = pd.DataFrame([[0.5,0.4,0.1],[0.7,0.5,0.8],[0.8,0.6,0.1]])
+        matrix1 = pd.DataFrame([[1]])
+        matrix2 = pd.DataFrame([[1,0]])
+        matrix3 = pd.DataFrame([[1,0],[1,0]])
+        matrix4 = pd.DataFrame([[1,0,1],[1,0,0]])
+        self.assertAlmostEqual(0.7, similarity_matrix_X(matrix0))
+        self.assertEqual(1, similarity_matrix_X(matrix1))
+        self.assertEqual(1, similarity_matrix_X(matrix2))
+        self.assertEqual(1, similarity_matrix_X(matrix3))
+        self.assertEqual(1, similarity_matrix_X(matrix4))
 
 if __name__ == '__main__':
     unittest.main()
