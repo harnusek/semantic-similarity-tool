@@ -5,10 +5,12 @@ import sys, os
 import pandas as pd
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'core'))
 from common import preprocessing
+from common import sentence_analysis
+
 from common import avg_list
-from common import lemmatization
+# from common import lemmatization
 from common import generate_matrices
-from common import remove_stop_words
+# from common import remove_stop_words
 
 class TestCommon(unittest.TestCase):
 # pre
@@ -20,6 +22,16 @@ class TestCommon(unittest.TestCase):
         use_pos = False
         use_lem = False
         print(preprocessing(sent_1,sent_2, del_stop, use_pos, use_lem))
+
+    def test_sentence_analysis(self):
+        sent = "anotátor, napr. tento!"
+        analyzed_sent = [{'word': 'anotátor', 'tag': 'SSms1'},
+                         {'word': ',', 'tag': 'Z'},
+                         {'word': 'napr', 'tag': 'W'},
+                         {'word': '.', 'tag': 'Z'},
+                         {'word': 'tento', 'tag': 'PFms1'},
+                         {'word': '!', 'tag': 'Z'}]
+        self.assertEqual(analyzed_sent, sentence_analysis(sent))
 
     def test_remove_stop_words(self):
         os.chdir('..')
