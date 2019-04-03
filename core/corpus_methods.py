@@ -5,14 +5,11 @@ from gensim.models.keyedvectors import KeyedVectors
 import os
 from gensim.models import Word2Vec
 
-def similarity_sentences(sent_1,sent_2, del_stop=False, use_pos=False, use_lem=False):
+def similarity_sentences(sent_1,sent_2, use_stop=True, use_pos=False, use_lem=False):
     """
     Return similarity between two sentences
     """
-    # all = common.preprocessing(sent_1,sent_2, del_stop, use_pos, use_lem)
-    tokens1 = common.lemmatization(sent_1)
-    tokens2 = common.lemmatization(sent_2)
-    matrices = common.generate_matrices(tokens1, tokens2)
+    matrices = common.preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem)
     matrices = [fill_matrix(matrix, model) for matrix in matrices]
     sim_list = [similarity_matrix_avg(matrix) for matrix in matrices]
     return common.avg_list(sim_list)

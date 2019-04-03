@@ -15,9 +15,10 @@ def POST_knowledge_similarity(params):
     """
     sent_1 = params.get("sent_1", None)
     sent_2 = params.get("sent_2", None)
-    remove_stop_words = params.get("remove_stop_words", None)
-
-    result = knowledge_methods.similarity_sentences(sent_1,sent_2)
+    use_stop = params.get("use_stop", True)
+    use_pos = params.get("use_stop", False)
+    use_lem = params.get("use_stop", False)
+    result = knowledge_methods.similarity_sentences(sent_1,sent_2, use_stop, use_pos, use_lem)
     if result is not None:
         return result, 201
     else:
@@ -35,9 +36,10 @@ def POST_corpus_similarity(params):
     """
     sent_1 = params.get("sent_1", None)
     sent_2 = params.get("sent_2", None)
-
-    result = corpus_methods.similarity_sentences(sent_1,sent_2)
-
+    use_stop = params.get("use_stop", True)
+    use_pos = params.get("use_stop", False)
+    use_lem = params.get("use_stop", False)
+    result = corpus_methods.similarity_sentences(sent_1,sent_2, use_stop, use_pos, use_lem)
     if result is not None:
         return result, 201
     else:

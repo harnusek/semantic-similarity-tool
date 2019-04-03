@@ -34,9 +34,15 @@ paths:
               sent_2:
                 type: string
                 description: Second sentence
-              remove_stop_words:
+              use_stop:
                 type: boolean
-                description: Remove stop words?
+                description: Use stop words in method?
+              use_pos:
+                type: boolean
+                description: Use part-of-speech tagging in method?
+              use_lem:
+                type: boolean
+                description: Use lematization in method?
             required:
               - sent_1
               - sent_2
@@ -64,6 +70,15 @@ paths:
               sent_2:
                 type: string
                 description: Second sentence
+              use_stop:
+                type: boolean
+                description: Use stop words in method?
+              use_pos:
+                type: boolean
+                description: Use part-of-speech tagging in method?
+              use_lem:
+                type: boolean
+                description: Use lematization in method?
             required:
               - sent_1
               - sent_2

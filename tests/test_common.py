@@ -38,7 +38,7 @@ class TestCommon(unittest.TestCase):
                          {'word': '.', 'tag': 'Z'},
                          {'word': 'tento', 'tag': 'P'},
                          {'word': '!', 'tag': 'Z'}]
-        self.assertEqual(analyzed_sent, sentence_analysis(sent))
+        self.assertEqual(analyzed_sent, sentence_analysis(sent, use_stop=True, use_lem=False))
 
     def test_categorize_sentences(self):
         analyzed_sent1 = [{'word': '0', 'tag': 'A'},

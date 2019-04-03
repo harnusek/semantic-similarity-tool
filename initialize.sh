@@ -1,5 +1,8 @@
 #!/bin/sh
-# echo 'Running unit tests.'
+echo 'Installing requirements.'
+pip install -r requirements.txt
+# ---
+echo 'Running unit tests.'
 cd ./tests/
 ./test.sh
 cd ..

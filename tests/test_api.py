@@ -26,7 +26,7 @@ class TestApi(unittest.TestCase):
         headers = {'content-type': 'application/json'}
         response = requests.post(url, data=json.dumps(data), headers=headers)
         sim = float(response.content)
-        self.assertEqual(0.2767875757999718, sim)
+        self.assertAlmostEqual(0.2767875757999718, sim)
 
 if __name__ == '__main__':
     unittest.main()

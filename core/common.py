@@ -6,9 +6,9 @@ import json
 
 POS_TAGSET = ['default','P','V','S','Z']
 
-def preprocessing(sent_1,sent_2, del_stop, use_pos, use_lem):
-    analysed_sent_1 = sentence_analysis(sent_1, del_stop, use_lem)
-    analysed_sent_2 = sentence_analysis(sent_2, del_stop, use_lem)
+def preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem):
+    analysed_sent_1 = sentence_analysis(sent_1, use_stop, use_lem)
+    analysed_sent_2 = sentence_analysis(sent_2, use_stop, use_lem)
     if(use_pos):
         categorized = categorize_sentences(analysed_sent_1, analysed_sent_2, POS_TAGSET)
     else:
@@ -16,12 +16,14 @@ def preprocessing(sent_1,sent_2, del_stop, use_pos, use_lem):
     matrices = generate_matrices(categorized)
     return matrices
 
-def sentence_analysis(sent, del_stop=False, use_lem=False):
+def sentence_analysis(sent, use_stop, use_lem):
     analysed_sent = list()
     url = 'http://nlp.bednarik.top/lemmatizer/json'
     payload = {'input': sent, 'method': 'WITHPOS'}
     response = requests.post(url, data=payload)
     json_str = response.content.decode('utf-8')
+    # print(json_str)
+    # return
     tree = json.loads(json_str)
     for part in tree['sentences']:
         for token in part['tokens']:
