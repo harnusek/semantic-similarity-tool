@@ -8,7 +8,7 @@ import io
 import threading
 import os
 
-def similarity_sentences(sent_1,sent_2, use_stop=True, use_pos=False, use_lem=False):
+def similarity_sentences(sent_1,sent_2, use_stop, use_pos, use_lem):
     """
     Return similarity between two sentences
     """
@@ -31,14 +31,17 @@ def update_dictionary(dictionary, word):
     return dictionary
 
 def fill_matrix(matrix, dictionary):
-    for col in matrix.columns.values:
-        for ind in matrix.index.values:
-            dictionary = update_dictionary(dictionary, col)
-            dictionary = update_dictionary(dictionary, ind)
-            matrix.loc[ind, col] = similarity_tokens(col, ind, dictionary)
+    if matrix is not None:
+        for col in matrix.columns.values:
+            for ind in matrix.index.values:
+                dictionary = update_dictionary(dictionary, col)
+                dictionary = update_dictionary(dictionary, ind)
+                matrix.loc[ind, col] = similarity_tokens(col, ind, dictionary)
     return matrix
 
 def similarity_tokens(token1, token2, dictionary):
+    if(token1 is token2):
+        return 1
     set1 = set(dictionary[token1])
     set2 = set(dictionary[token2])
     set1.add(token1)
@@ -49,6 +52,8 @@ def similarity_tokens(token1, token2, dictionary):
         return 0.0
 
 def similarity_matrix_avg(matrix):
+    if matrix is None:
+        return None
     array = matrix.values
     count = 0
     for line in array:

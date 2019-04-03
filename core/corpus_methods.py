@@ -5,7 +5,7 @@ from gensim.models.keyedvectors import KeyedVectors
 import os
 from gensim.models import Word2Vec
 
-def similarity_sentences(sent_1,sent_2, use_stop=True, use_pos=False, use_lem=False):
+def similarity_sentences(sent_1,sent_2, use_stop, use_pos, use_lem):
     """
     Return similarity between two sentences
     """
@@ -21,12 +21,15 @@ def load_model():
     return model
 
 def fill_matrix(matrix, model):
-    for col in matrix.columns.values:
-        for ind in matrix.index.values:
-            matrix.loc[ind, col] = similarity_tokens(ind, col, model)
+    if matrix is not None:
+        for col in matrix.columns.values:
+            for ind in matrix.index.values:
+                matrix.loc[ind, col] = similarity_tokens(ind, col, model)
     return matrix
 
 def similarity_tokens(token1, token2, model):
+    if(token1 is token2):
+        return 1
     try:
         sim = model.wv.similarity(token1, token2)
     except KeyError:
@@ -34,6 +37,8 @@ def similarity_tokens(token1, token2, model):
     return sim
 
 def similarity_matrix_avg(matrix):
+    if matrix is None:
+        return None
     array = matrix.values
     count = 0
     for line in array:
@@ -56,4 +61,6 @@ def generate_model():
 if(os.getcwd().split(os.sep)[-1] != 'tests'):
     model = load_model()
 else:
-    model = generate_model()
+    # model = generate_model()
+    fname = '../core/data/[SK]prim-6.1-public-all.shuffled.080cbow.bin'
+    model = KeyedVectors.load_word2vec_format(fname, binary=True)

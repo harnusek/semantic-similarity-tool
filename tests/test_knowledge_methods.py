@@ -36,11 +36,11 @@ class TestKnowledgeMethods(unittest.TestCase):
         self.assertEqual(0, similarity_tokens('N0TD3FIN3D', 'N0N3X1ST', dictionary))
 
     def test_similarity_sentences(self):
-        self.assertAlmostEqual(1, similarity_sentences("metóda", "metóda"))
-        self.assertAlmostEqual(0.8, similarity_sentences("metóda metóda", "metóda metóda N0TD3FIN3D metóda metóda"))
-        self.assertAlmostEqual(0, similarity_sentences("metóda", "N0TD3FIN3D"))
-        self.assertAlmostEqual(0.06, similarity_sentences("My v tom máme jasno. A čo vy?", "Boli ste už voliť?"))
-        self.assertAlmostEqual(0.16666666666666666, similarity_sentences("Compute similarity between two sentences.","Compute similarity between two sentences."))
+        self.assertEqual(1, similarity_sentences("metóda", "metóda",False,False,False))
+        self.assertEqual(0.8, similarity_sentences("metóda metóda", "metóda metóda N0TD3FIN3D metóda metóda",False,False,False))
+        self.assertEqual(0, similarity_sentences("metóda", "N0TD3FIN3D",False,False,False))
+        self.assertEqual(0.06, similarity_sentences("My v tom máme jasno. A čo vy?", "Boli ste už voliť?",False,False,False))
+        self.assertEqual(0.1667, similarity_sentences("Compute similarity between two sentences.","Compute similarity between two sentences.",False,False,False))
 
 
     def test_similarity_matrix_avg(self):

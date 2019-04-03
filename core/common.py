@@ -34,12 +34,6 @@ def sentence_analysis(sent, use_stop, use_lem):
             analysed_sent.append(pair)
     return analysed_sent
 
-# def lemmatization(sent):
-#     response = requests.post(url='http://text.fiit.stuba.sk:8080/lematizer/services/lemmatizer/lemmatize/fast', data=sent.encode('utf-8'))
-#     str = response.content.decode("utf-8")
-#     tokens = str.split(' ')
-#     return tokens
-
 # def is_stop_word(word):
 #     with open('core/data/stop_words_SK.txt', 'r', encoding='utf-8') as file:
 #         stop_words = [word.rstrip() for word in file]
@@ -76,4 +70,5 @@ def generate_matrices(categorized):
 def avg_list(list):
     suma = sum([i for i in list if i is not None])
     lenth = len([i for i in list if i is not None])
-    return suma/lenth
+    average = round(suma/lenth, 4)
+    return average

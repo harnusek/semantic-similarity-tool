@@ -26,7 +26,7 @@ class TestCorpusMethods(unittest.TestCase):
         self.assertEqual( 0,similarity_tokens("UND3FIN3D","byt", model))
 
     def test_similarity_sentences(self):
-        self.assertEqual(0.5, similarity_sentences('dom UND3FIN3D', 'dom'))
+        self.assertEqual(0.5, similarity_sentences('dom UND3FIN3D', 'dom', False, False, False))
 
     def test_similarity_matrix_avg(self):
         matrix1 = pd.DataFrame([[1]])

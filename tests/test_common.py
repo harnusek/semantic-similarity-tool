@@ -7,10 +7,9 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'core'))
 from common import preprocessing
 from common import sentence_analysis
 from common import categorize_sentences
+from common import generate_matrices
 
 # from common import lemmatization
-from common import generate_matrices
-# from common import is_stop_word
 from common import avg_list
 
 class TestCommon(unittest.TestCase):
@@ -18,7 +17,7 @@ class TestCommon(unittest.TestCase):
     def test_preprocessing(self):
         sent_1 = "Koľko dní?"
         sent_2 = "Aký je?"
-        del_stop = False
+        use_stop = True
         use_pos = True
         use_lem = False
         matrices = [None,
@@ -26,7 +25,7 @@ class TestCommon(unittest.TestCase):
                     None,
                     None,
                     pd.DataFrame(columns=['?'], index=['?']).apply(pd.to_numeric, errors='coerce')]
-        for e, a in zip(matrices, preprocessing(sent_1,sent_2, del_stop, use_pos, use_lem)):
+        for e, a in zip(matrices, preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem)):
             if(e is not None and a is not None):
                 self.assertTrue(pd.DataFrame.equals(e, a))
 
@@ -54,11 +53,6 @@ class TestCommon(unittest.TestCase):
     # def test_is_stop_word(self):
     #     os.chdir('..')
     #     self.assertEqual(['1', '2'], is_stop_word(['1', '2','a']))
-    #
-    # def test_lemmatization(self):
-    #     self.assertEqual([''], lemmatization(''))
-    #     self.assertEqual(['mama', 'alebo', 'nemať'], lemmatization('mám, alebo nemám!'))
-    #     self.assertEqual(['alfa', 'beta'], lemmatization('alfa beta?'))
 
     def test_generate_matrices(self):
         tokens1 = ["ako","si","starý"]
@@ -71,6 +65,7 @@ class TestCommon(unittest.TestCase):
     def test_avg_list(self):
         self.assertEqual(0, avg_list([0, None]))
         self.assertEqual(9, avg_list([9]))
+        self.assertEqual(1.3333, avg_list([3,0,1]))
         self.assertEqual(2, avg_list([0, None, 1, 2, 3, None, None, 4]))
 if __name__ == '__main__':
     unittest.main()
