@@ -8,8 +8,6 @@ from common import preprocessing
 from common import sentence_analysis
 from common import categorize_sentences
 from common import generate_matrices
-
-# from common import lemmatization
 from common import avg_list
 
 class TestCommon(unittest.TestCase):
@@ -17,11 +15,11 @@ class TestCommon(unittest.TestCase):
     def test_preprocessing(self):
         sent_1 = "Koľko dní?"
         sent_2 = "Aký je?"
-        use_stop = True
+        use_stop = False
         use_pos = True
-        use_lem = False
+        use_lem = True
         matrices = [None,
-                    pd.DataFrame(columns=['Koľko'], index= ['Aký']).apply(pd.to_numeric, errors='coerce'),
+                    pd.DataFrame(columns=['koľko'], index= ['aký']).apply(pd.to_numeric, errors='coerce'),
                     None,
                     None,
                     pd.DataFrame(columns=['?'], index=['?']).apply(pd.to_numeric, errors='coerce')]
@@ -30,14 +28,17 @@ class TestCommon(unittest.TestCase):
                 self.assertTrue(pd.DataFrame.equals(e, a))
 
     def test_sentence_analysis(self):
-        sent = "anotátor, napr. tento!"
-        analyzed_sent = [{'word': 'anotátor', 'tag': 'S'},
+        sent = "anotátor, napr. tento?"
+        analyzed_sent1 = [{'word': 'anotátor', 'tag': 'S'},
                          {'word': ',', 'tag': 'Z'},
                          {'word': 'napr', 'tag': 'W'},
                          {'word': '.', 'tag': 'Z'},
                          {'word': 'tento', 'tag': 'P'},
-                         {'word': '!', 'tag': 'Z'}]
-        self.assertEqual(analyzed_sent, sentence_analysis(sent, use_stop=True, use_lem=False))
+                         {'word': '?', 'tag': 'Z'}]
+        self.assertEqual(analyzed_sent1, sentence_analysis(sent, use_stop=True, use_lem=False))
+        # test if stop-words stuff work
+        analyzed_sent2 = [{'word': 'sa', 'tag': 'R'}]
+        self.assertEqual(analyzed_sent2, sentence_analysis('a aby sa', use_stop=False, use_lem=False))
 
     def test_categorize_sentences(self):
         analyzed_sent1 = [{'word': '0', 'tag': 'A'},
@@ -49,10 +50,6 @@ class TestCommon(unittest.TestCase):
         categories = ['default', 'A', 'B', 'C']
         categorized = [[[], ['5']], [['0'], ['3']], [['1', '2'], ['4']], [[], []]]
         self.assertEqual(categorized, categorize_sentences(analyzed_sent1, analyzed_sent2, categories))
-
-    # def test_is_stop_word(self):
-    #     os.chdir('..')
-    #     self.assertEqual(['1', '2'], is_stop_word(['1', '2','a']))
 
     def test_generate_matrices(self):
         tokens1 = ["ako","si","starý"]

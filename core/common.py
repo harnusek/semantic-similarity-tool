@@ -3,6 +3,7 @@
 import requests
 import pandas as pd
 import json
+import os
 
 POS_TAGSET = ['default','P','V','S','Z']
 
@@ -17,28 +18,29 @@ def preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem):
     return matrices
 
 def sentence_analysis(sent, use_stop, use_lem):
+    # print(stop_words)
+    # print(type(stop_words))
+    # print(1 if '?' in stop_words else 0)
+    # return
     analysed_sent = list()
     url = 'http://nlp.bednarik.top/lemmatizer/json'
     payload = {'input': sent, 'method': 'WITHPOS'}
     response = requests.post(url, data=payload)
     json_str = response.content.decode('utf-8')
-    # print(json_str)
-    # return
     tree = json.loads(json_str)
     for part in tree['sentences']:
         for token in part['tokens']:
-            # needs test stop words
             word = token['lemma'] if use_lem else token['text']
-            tag = token['tag'][0] # needs simplify
-            pair = {'word':word, 'tag':tag}
-            analysed_sent.append(pair)
+            tag = token['tag'][0]  # needs simplify
+            if(use_stop) or (not use_stop and word not in stop_words):
+                pair = {'word':word, 'tag':tag}
+                analysed_sent.append(pair)
     return analysed_sent
 
-# def is_stop_word(word):
-#     with open('core/data/stop_words_SK.txt', 'r', encoding='utf-8') as file:
-#         stop_words = [word.rstrip() for word in file]
-#         filtered_words = [word for word in words if word not in stop_words]
-#         return filtered_words
+def load_stop_words():
+    with open('core/data/stop_words_SK.txt', 'r', encoding='utf-8') as file:
+        stop_words = set(word.rstrip() for word in file)
+    return stop_words
 
 def categorize_sentences(analysed_sent_1, analysed_sent_2, categories):
     splited = [[list(),list()] for _ in categories]
@@ -72,3 +74,8 @@ def avg_list(list):
     lenth = len([i for i in list if i is not None])
     average = round(suma/lenth, 4)
     return average
+
+if(os.getcwd().split(os.sep)[-1] != 'tests'):
+    stop_words = load_stop_words()
+else:
+    stop_words = set(['a','i','aby'])
