@@ -16,6 +16,7 @@ def similarity_sentences(sent_1,sent_2, use_stop, use_pos, use_lem):
 
 def load_model():
     fname = 'core/data/[SK]prim-6.1-public-all.shuffled.080cbow.bin'
+    # fname = 'core/data/[SK]prim-6.1-public-all.shuffled.200cbow.bin'
     # fname = 'core/data/[SK]prim-6.1-public-all.shuffled.300cbow.bin'
     model = KeyedVectors.load_word2vec_format(fname, binary=True)
     return model
