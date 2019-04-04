@@ -18,10 +18,6 @@ def preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem):
     return matrices
 
 def sentence_analysis(sent, use_stop, use_lem):
-    # print(stop_words)
-    # print(type(stop_words))
-    # print(1 if '?' in stop_words else 0)
-    # return
     analysed_sent = list()
     url = 'http://nlp.bednarik.top/lemmatizer/json'
     payload = {'input': sent, 'method': 'WITHPOS'}
