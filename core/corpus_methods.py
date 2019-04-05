@@ -70,6 +70,6 @@ def generate_model():
 if(os.getcwd().split(os.sep)[-1] != 'tests'):
     model = load_model()
 else:
-    # model = generate_model()
-    fname = '../core/data/[SK]prim-6.1-public-all.shuffled.080cbow.bin'
-    model = KeyedVectors.load_word2vec_format(fname, binary=True)
+    model = generate_model()
+    # fname = '../core/data/[SK]prim-6.1-public-all.shuffled.080cbow.bin'
+    # model = KeyedVectors.load_word2vec_format(fname, binary=True)
