@@ -69,10 +69,7 @@ def similarity_tokens(token1, token2, dictionary):
     set2 = set(dictionary[token2])
     set1.add(token1)
     set2.add(token2)
-    if bool(set1 & set2):
-        return 1.0
-    else:
-        return 0.0
+    return (1.0 if bool(set1 & set2) else 0.0)
 
 def similarity_matrix(matrix):
     """

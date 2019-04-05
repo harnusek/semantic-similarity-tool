@@ -6,7 +6,8 @@ import pandas as pd
 import json
 import os
 
-POS_TAGSET = ['default','P','V','S']
+EMPTY_POS_TAGSET = ['default']
+SIMPLE_POS_TAGSET = ['default','P','V','S']
 # POS_TAGSET = ['default','S','P','N','D','E','O','J','D','T','A','Z']
 
 def preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem):
@@ -20,10 +21,10 @@ def preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem):
     """
     analysed_sent_1 = sentence_analysis(sent_1, use_stop, use_lem)
     analysed_sent_2 = sentence_analysis(sent_2, use_stop, use_lem)
-    if(use_pos):
-        categorized = categorize_sentences(analysed_sent_1, analysed_sent_2, POS_TAGSET)
-    else:
-        categorized = categorize_sentences(analysed_sent_1, analysed_sent_2, ['default'])
+
+    pos_tagset = SIMPLE_POS_TAGSET if use_pos else EMPTY_POS_TAGSET
+    categorized = categorize_sentences(analysed_sent_1, analysed_sent_2, pos_tagset)
+
     matrices = generate_matrices(categorized)
     return matrices
 
@@ -43,7 +44,7 @@ def sentence_analysis(sent, use_stop, use_lem):
     for part in tree['sentences']:
         for token in part['tokens']:
             word = token['lemma'] if use_lem else token['text']
-            tag = token['tag'][0]  # needs simplify
+            tag = token['tag'][0]
             if(use_stop) or (not use_stop and word not in stop_words):
                 pair = {'word':word, 'tag':tag}
                 analysed_sent.append(pair)
@@ -65,16 +66,13 @@ def categorize_sentences(analysed_sent_1, analysed_sent_2, categories):
     :return: list of [words from 1, words from 2](one per each pos_tags)
     """
     splited = [[list(),list()] for _ in categories]
-    for pair in analysed_sent_1:
-        index = 0
-        if pair['tag'] in categories:
-            index = categories.index(pair['tag'])
-        splited[index][0].append(pair['word'])
-    for pair in analysed_sent_2:
-        index = 0
-        if pair['tag'] in categories:
-            index = categories.index(pair['tag'])
-        splited[index][1].append(pair['word'])
+    sent = [analysed_sent_1,analysed_sent_2]
+    for i in [0,1]:
+        for pair in sent[i]:
+            index = 0
+            if pair['tag'] in categories:
+                index = categories.index(pair['tag'])
+            splited[index][i].append(pair['word'])
     return splited
 
 def generate_matrices(categorized):
