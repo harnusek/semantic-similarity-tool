@@ -8,8 +8,7 @@ from knowledge_methods import update_dictionary
 from knowledge_methods import fill_matrix
 from knowledge_methods import similarity_tokens
 from knowledge_methods import similarity_sentences
-from knowledge_methods import similarity_matrix_avg
-from knowledge_methods import similarity_matrix_X
+from knowledge_methods import similarity_matrix
 
 class TestKnowledgeMethods(unittest.TestCase):
     def test_update_dictionary(self):
@@ -43,17 +42,7 @@ class TestKnowledgeMethods(unittest.TestCase):
         self.assertEqual(0.06, similarity_sentences("My v tom máme jasno. A čo vy?", "Boli ste už voliť?",False,False,False))
         self.assertEqual(0.1667, similarity_sentences("Compute similarity between two sentences.","Compute similarity between two sentences.",False,False,False))
 
-    def test_similarity_matrix_avg(self):
-        matrix1 = pd.DataFrame([[1]])
-        matrix2 = pd.DataFrame([[1,0]])
-        matrix3 = pd.DataFrame([[1,0],[1,0]])
-        matrix4 = pd.DataFrame([[1,0,1],[1,0,0]])
-        self.assertEqual(1, similarity_matrix_avg(matrix1))
-        self.assertEqual(0.5, similarity_matrix_avg(matrix2))
-        self.assertEqual(0.5, similarity_matrix_avg(matrix3))
-        self.assertEqual(0.5, similarity_matrix_avg(matrix4))
-
-    def test_similarity_matrix_X(self):
+    def test_similarity_matrix(self):
         matrix = pd.DataFrame([[0.3, 0.5],
                               [0.6 , 0.9],
                               [0.1, 0.7]])
@@ -66,12 +55,12 @@ class TestKnowledgeMethods(unittest.TestCase):
                                 [1,0]])
         matrix4 = pd.DataFrame([[1,0,1],
                                 [1,0,0]])
-        self.assertAlmostEqual(0.4, similarity_matrix_X(matrix))
-        self.assertAlmostEqual(0.6666666666666666, similarity_matrix_X(matrix0))
-        self.assertEqual(1, similarity_matrix_X(matrix1))
-        self.assertEqual(0.5, similarity_matrix_X(matrix2))
-        self.assertEqual(0.5, similarity_matrix_X(matrix3))
-        self.assertAlmostEqual(0.3333333333333333, similarity_matrix_X(matrix4))
+        self.assertAlmostEqual(0.4, similarity_matrix(matrix))
+        self.assertAlmostEqual(0.6666666666666666, similarity_matrix(matrix0))
+        self.assertEqual(1, similarity_matrix(matrix1))
+        self.assertEqual(0.5, similarity_matrix(matrix2))
+        self.assertEqual(0.5, similarity_matrix(matrix3))
+        self.assertAlmostEqual(0.3333333333333333, similarity_matrix(matrix4))
 
 if __name__ == '__main__':
     unittest.main()

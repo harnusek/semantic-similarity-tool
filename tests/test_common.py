@@ -65,5 +65,6 @@ class TestCommon(unittest.TestCase):
         self.assertEqual(9, avg_list([9]))
         self.assertEqual(1.3333, avg_list([3,0,1]))
         self.assertEqual(2, avg_list([0, 1, 2, 3, 4]))
+
 if __name__ == '__main__':
     unittest.main()
