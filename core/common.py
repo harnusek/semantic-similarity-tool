@@ -5,7 +5,8 @@ import pandas as pd
 import json
 import os
 
-POS_TAGSET = ['default','P','V','S','Z']
+POS_TAGSET = ['default','P','V','S']
+# POS_TAGSET = ['default','S','P','N','D','E','O','J','D','T','A','Z']
 
 def preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem):
     analysed_sent_1 = sentence_analysis(sent_1, use_stop, use_lem)
@@ -66,8 +67,12 @@ def generate_matrices(categorized):
 
 # post
 def avg_list(list):
-    suma = sum([i for i in list if i is not None])
-    lenth = len([i for i in list if i is not None])
+    if len(list)!=1:
+        list = list[1:]
+    suma = sum(list)
+    lenth = len(list)
+    if lenth is 0:
+        return 0
     average = round(suma/lenth, 4)
     return average
 

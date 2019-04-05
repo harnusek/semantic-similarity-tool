@@ -7,6 +7,7 @@ import json
 import io
 import threading
 import os
+import numpy as np
 
 def similarity_sentences(sent_1,sent_2, use_stop, use_pos, use_lem):
     """
@@ -14,7 +15,7 @@ def similarity_sentences(sent_1,sent_2, use_stop, use_pos, use_lem):
     """
     matrices = common.preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem)
     matrices = [fill_matrix(matrix, dictionary) for matrix in matrices]
-    sim_list = [similarity_matrix_avg(matrix) for matrix in matrices]
+    sim_list = [similarity_matrix_X(matrix) for matrix in matrices]
     return common.avg_list(sim_list)
 
 def update_dictionary(dictionary, word):
@@ -62,11 +63,18 @@ def similarity_matrix_avg(matrix):
     return count/array.size
 
 def similarity_matrix_X(matrix):
+    if matrix is None:
+        return 0
     array = matrix.values
+    long_len = max(array.shape)
+    short_len = min(array.shape)
     count = 0
-    for line in array:
-        count = count+max(line)
-    return count/len(array)
+    for _ in range(short_len):
+        i, j = np.unravel_index(array.argmax(), array.shape)
+        count = count + array[i, j]
+        array = np.delete(array, i, 0)
+        array = np.delete(array, j, 1)
+    return count/long_len
 
 def load_dictionary():
     try:

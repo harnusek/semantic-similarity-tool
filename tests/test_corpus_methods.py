@@ -39,16 +39,24 @@ class TestCorpusMethods(unittest.TestCase):
         self.assertEqual(0.5, similarity_matrix_avg(matrix4))
 
     def test_similarity_matrix_X(self):
-        matrix0 = pd.DataFrame([[0.5,0.4,0.1],[0.7,0.5,0.8],[0.8,0.6,0.1]])
+        matrix = pd.DataFrame([[0.3, 0.5],
+                              [0.6 , 0.9],
+                              [0.1, 0.7]])
+        matrix0 = pd.DataFrame([[0.5,0.4,0.1],
+                                [0.7,0.5,0.8],
+                                [0.8,0.6,0.1]])
         matrix1 = pd.DataFrame([[1]])
         matrix2 = pd.DataFrame([[1,0]])
-        matrix3 = pd.DataFrame([[1,0],[1,0]])
-        matrix4 = pd.DataFrame([[1,0,1],[1,0,0]])
-        self.assertAlmostEqual(0.7, similarity_matrix_X(matrix0))
+        matrix3 = pd.DataFrame([[1,0],
+                                [1,0]])
+        matrix4 = pd.DataFrame([[1,0,1],
+                                [1,0,0]])
+        self.assertAlmostEqual(0.4, similarity_matrix_X(matrix))
+        self.assertAlmostEqual(0.6666666666666666, similarity_matrix_X(matrix0))
         self.assertEqual(1, similarity_matrix_X(matrix1))
-        self.assertEqual(1, similarity_matrix_X(matrix2))
-        self.assertEqual(1, similarity_matrix_X(matrix3))
-        self.assertEqual(1, similarity_matrix_X(matrix4))
+        self.assertEqual(0.5, similarity_matrix_X(matrix2))
+        self.assertEqual(0.5, similarity_matrix_X(matrix3))
+        self.assertAlmostEqual(0.3333333333333333, similarity_matrix_X(matrix4))
 
 if __name__ == '__main__':
     unittest.main()
