@@ -45,7 +45,6 @@ def categorize_sentences(analysed_sent_1, analysed_sent_2, categories):
         index = 0
         if pair['tag'] in categories:
             index = categories.index(pair['tag'])
-        # print(pair['word'], pair['tag'], index, splited[index])
         splited[index][0].append(pair['word'])
     for pair in analysed_sent_2:
         index = 0
@@ -67,6 +66,7 @@ def generate_matrices(categorized):
 
 # post
 def avg_list(list):
+    list = [x for x in list if x is not None]
     if len(list)!=1:
         list = list[1:]
     suma = sum(list)

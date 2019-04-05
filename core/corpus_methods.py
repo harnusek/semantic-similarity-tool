@@ -50,7 +50,7 @@ def similarity_matrix_avg(matrix):
 
 def similarity_matrix_X(matrix):
     if matrix is None:
-        return 0
+        return None
     array = matrix.values
     long_len = max(array.shape)
     short_len = min(array.shape)
