@@ -7,8 +7,8 @@ import json
 import os
 
 EMPTY_POS_TAGSET = ['default']
-SIMPLE_POS_TAGSET = ['default','P','V','S']
-# POS_TAGSET = ['default','S','P','N','D','E','O','J','D','T','A','Z']
+SIMPLE_POS_TAGSET = ['P','V','S']
+# POS_TAGSET = ['S','P','N','D','E','O','J','D','T','A','Z']
 
 def preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem):
     """
@@ -58,21 +58,22 @@ def load_stop_words():
         stop_words = set(word.rstrip() for word in file)
     return stop_words
 
-def categorize_sentences(analysed_sent_1, analysed_sent_2, categories):
+def categorize_sentences(analysed_sent_1, analysed_sent_2, pos_tagset):
     """
     :param analysed_sent_1:
     :param analysed_sent_2:
-    :param categories:
+    :param pos_tagset:
     :return: list of [words from 1, words from 2](one per each pos_tags)
     """
-    splited = [[list(),list()] for _ in categories]
-    sent = [analysed_sent_1,analysed_sent_2]
+    splited = [[list(),list()] for _ in pos_tagset]
+    sents = [analysed_sent_1,analysed_sent_2]
     for i in [0,1]:
-        for pair in sent[i]:
-            index = 0
-            if pair['tag'] in categories:
-                index = categories.index(pair['tag'])
-            splited[index][i].append(pair['word'])
+        for pair in sents[i]:
+            if pair['tag'] in pos_tagset:
+                index = pos_tagset.index(pair['tag'])
+                splited[index][i].append(pair['word'])
+            if(len(pos_tagset) == 1):
+                splited[0][i].append(pair['word'])
     return splited
 
 def generate_matrices(categorized):
@@ -97,11 +98,9 @@ def avg_list(list):
     :return: final similarity from list
     """
     list = [x for x in list if x is not None]
-    if len(list)!=1:
-        list = list[1:]
     suma = sum(list)
     lenth = len(list)
-    if lenth is 0:
+    if lenth == 0:
         return 0
     average = round(suma/lenth, 4)
     return average

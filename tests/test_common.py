@@ -47,8 +47,8 @@ class TestCommon(unittest.TestCase):
         analyzed_sent2 = [{'word': '3', 'tag': 'A'},
                           {'word': '4', 'tag': 'B'},
                           {'word': '5', 'tag': 'X'}]
-        categories = ['default', 'A', 'B', 'C']
-        categorized = [[[], ['5']], [['0'], ['3']], [['1', '2'], ['4']], [[], []]]
+        categories = ['A', 'B', 'C']
+        categorized = [[['0'], ['3']], [['1', '2'], ['4']], [[], []]]
         self.assertEqual(categorized, categorize_sentences(analyzed_sent1, analyzed_sent2, categories))
 
     def test_generate_matrices(self):
@@ -60,7 +60,6 @@ class TestCommon(unittest.TestCase):
             self.assertTrue(pd.DataFrame.equals(e, a))
 # post
     def test_avg_list(self):
-        self.skipTest('in progress')
         self.assertEqual(0, avg_list([0]))
         self.assertEqual(9, avg_list([9]))
         self.assertEqual(1.3333, avg_list([3,0,1]))
