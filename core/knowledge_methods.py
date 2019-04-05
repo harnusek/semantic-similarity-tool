@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
+#!/usr/bin/env python
 
+"""
+Knowledge semantic similarity methods
+"""
 import common
 from lxml import html
 import requests
@@ -11,16 +15,23 @@ import numpy as np
 
 def similarity_sentences(sent_1,sent_2, use_stop, use_pos, use_lem):
     """
-    Return similarity between two sentences
+    :param sent_1:
+    :param sent_2:
+    :param use_stop:
+    :param use_pos:
+    :param use_lem:
+    :return: similarity between sent_1 and sent_2
     """
     matrices = common.preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem)
     matrices = [fill_matrix(matrix, dictionary) for matrix in matrices]
-    sim_list = [similarity_matrix_X(matrix) for matrix in matrices]
+    sim_list = [similarity_matrix(matrix) for matrix in matrices]
     return common.avg_list(sim_list)
 
 def update_dictionary(dictionary, word):
     """
-    Return dictionary of token:synonyms
+    :param dictionary:
+    :param word:
+    :return: dictionary updated with word
     """
     if(word not in dictionary):
         url = 'https://slovnik.azet.sk/synonyma/?q=' + word
@@ -32,6 +43,11 @@ def update_dictionary(dictionary, word):
     return dictionary
 
 def fill_matrix(matrix, dictionary):
+    """
+    :param matrix:
+    :param dictionary:
+    :return: matrix filled with token similarities
+    """
     if matrix is not None:
         for col in matrix.columns.values:
             for ind in matrix.index.values:
@@ -41,7 +57,13 @@ def fill_matrix(matrix, dictionary):
     return matrix
 
 def similarity_tokens(token1, token2, dictionary):
-    if(token1 is token2):
+    """
+    :param token1:
+    :param token2:
+    :param dictionary:
+    :return: similarity between token1 and token2
+    """
+    if(token1 == token2):
         return 1
     set1 = set(dictionary[token1])
     set2 = set(dictionary[token2])
@@ -52,17 +74,11 @@ def similarity_tokens(token1, token2, dictionary):
     else:
         return 0.0
 
-def similarity_matrix_avg(matrix):
-    if matrix is None:
-        return None
-    array = matrix.values
-    count = 0
-    for line in array:
-        for cell in line:
-            count = count + cell
-    return count/array.size
-
-def similarity_matrix_X(matrix):
+def similarity_matrix(matrix):
+    """
+    :param matrix:
+    :return: aggregated similarity from matrix
+    """
     if matrix is None:
         return None
     array = matrix.values
@@ -77,6 +93,9 @@ def similarity_matrix_X(matrix):
     return count/long_len
 
 def load_dictionary():
+    """
+    :return: cached dictionary of synonyms
+    """
     try:
         with open('core/data/synonym_dictionary.json', 'r', encoding="utf8") as json_file:
             json_str = json_file.read()
@@ -85,12 +104,15 @@ def load_dictionary():
         return dict()
 
 def save_dictionary():
+    """
+    Save dictionary of synonyms to file
+    """
     threading.Timer(300.0, save_dictionary).start()
     with io.open('core/data/synonym_dictionary.json', 'w', encoding='utf8') as json_file:
         json.dump(dictionary, json_file, ensure_ascii=False)
-        # print('[SAVE] synonym_dictionary.json')
 
-dictionary = dict()
 if(os.getcwd().split(os.sep)[-1] != 'tests'):
     dictionary = load_dictionary()
     save_dictionary()
+else:
+    dictionary = dict()
