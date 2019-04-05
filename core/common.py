@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+#!/usr/bin/env python
 
 import requests
 import pandas as pd
@@ -9,6 +10,14 @@ POS_TAGSET = ['default','P','V','S']
 # POS_TAGSET = ['default','S','P','N','D','E','O','J','D','T','A','Z']
 
 def preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem):
+    """
+    :param sent_1:
+    :param sent_2:
+    :param use_stop:
+    :param use_pos:
+    :param use_lem:
+    :return: list of matrix (one sper each POS tag)
+    """
     analysed_sent_1 = sentence_analysis(sent_1, use_stop, use_lem)
     analysed_sent_2 = sentence_analysis(sent_2, use_stop, use_lem)
     if(use_pos):
@@ -19,6 +28,12 @@ def preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem):
     return matrices
 
 def sentence_analysis(sent, use_stop, use_lem):
+    """
+    :param sent:
+    :param use_stop:
+    :param use_lem:
+    :return: list of {word:pos_tag}
+    """
     analysed_sent = list()
     url = 'http://nlp.bednarik.top/lemmatizer/json'
     payload = {'input': sent, 'method': 'WITHPOS'}
@@ -35,11 +50,20 @@ def sentence_analysis(sent, use_stop, use_lem):
     return analysed_sent
 
 def load_stop_words():
+    """
+    :return: dictionary of stop words
+    """
     with open('core/data/stop_words_SK.txt', 'r', encoding='utf-8') as file:
         stop_words = set(word.rstrip() for word in file)
     return stop_words
 
 def categorize_sentences(analysed_sent_1, analysed_sent_2, categories):
+    """
+    :param analysed_sent_1:
+    :param analysed_sent_2:
+    :param categories:
+    :return: list of [words from 1, words from 2](one per each pos_tags)
+    """
     splited = [[list(),list()] for _ in categories]
     for pair in analysed_sent_1:
         index = 0
@@ -54,6 +78,10 @@ def categorize_sentences(analysed_sent_1, analysed_sent_2, categories):
     return splited
 
 def generate_matrices(categorized):
+    """
+    :param categorized:
+    :return: list of empty matrices
+    """
     matrices = list()
     for columns, index in categorized:
         if(len(columns)>0 and len(index)>0):
@@ -66,6 +94,10 @@ def generate_matrices(categorized):
 
 # post
 def avg_list(list):
+    """
+    :param list:
+    :return: final similarity from list
+    """
     list = [x for x in list if x is not None]
     if len(list)!=1:
         list = list[1:]
