@@ -7,8 +7,11 @@ import json
 import os
 
 EMPTY_POS_TAGSET = ['default']
-SIMPLE_POS_TAGSET = ['P','V','S']
-# POS_TAGSET = ['S','P','N','D','E','O','J','D','T','A','Z']
+SIMPLE_POS_TAGSET = ['V','S','A']               # slovesá, podstatné, prídavné
+FANCY_POS_TAGSET = ['V','S','A','P','N','D']    # slovesá, podstatné, prídavné, zámená, číslovky, príslovky
+
+
+
 
 def preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem):
     """
@@ -22,7 +25,7 @@ def preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem):
     analysed_sent_1 = sentence_analysis(sent_1, use_stop, use_lem)
     analysed_sent_2 = sentence_analysis(sent_2, use_stop, use_lem)
 
-    pos_tagset = SIMPLE_POS_TAGSET if use_pos else EMPTY_POS_TAGSET
+    pos_tagset = FANCY_POS_TAGSET if use_pos else EMPTY_POS_TAGSET
     categorized = categorize_sentences(analysed_sent_1, analysed_sent_2, pos_tagset)
 
     matrices = generate_matrices(categorized)
@@ -66,14 +69,15 @@ def categorize_sentences(analysed_sent_1, analysed_sent_2, pos_tagset):
     :return: list of [words from 1, words from 2](one per each pos_tags)
     """
     splited = [[list(),list()] for _ in pos_tagset]
-    sents = [analysed_sent_1,analysed_sent_2]
-    for i in [0,1]:
-        for pair in sents[i]:
+    analysed_sentences = [analysed_sent_1,analysed_sent_2]
+    for i, analysed_sent in enumerate(analysed_sentences):
+        for pair in analysed_sent:
             if pair['tag'] in pos_tagset:
                 index = pos_tagset.index(pair['tag'])
                 splited[index][i].append(pair['word'])
             if(len(pos_tagset) == 1):
                 splited[0][i].append(pair['word'])
+    # print(splited)
     return splited
 
 def generate_matrices(categorized):
