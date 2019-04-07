@@ -21,7 +21,7 @@ def similarity_sentences(sent_1,sent_2, use_stop, use_pos, use_lem):
     """
     matrices = common.preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem)
     matrices = [fill_matrix(matrix, model) for matrix in matrices]
-    sim_list = [similarity_matrix(matrix) for matrix in matrices]
+    sim_list = [rival_matrix(matrix) for matrix in matrices]
     return common.avg_list(sim_list)
 
 def load_model():
@@ -78,6 +78,23 @@ def similarity_matrix(matrix):
         array = np.delete(array, i, 0)
         array = np.delete(array, j, 1)
     return count/long_len
+
+def rival_matrix(matrix):
+    """
+    :param matrix:
+    :return: similarity based on avaraging w2v vectors
+    """
+    if matrix is None:
+        return None
+    sent_1 = [word for word in matrix.columns.values if word in model.vocab]
+    sent_2 = [word for word in matrix.index.values if word in model.vocab]
+    if not sent_1 or not sent_2:
+        return 0.0
+    vect_1 =  np.mean(model[sent_1], axis=0)
+    vect_2 =  np.mean(model[sent_2], axis=0)
+    cosine_similarity = np.dot(vect_1, vect_2) / (
+            np.linalg.norm(vect_1) * np.linalg.norm(vect_2))
+    return float(cosine_similarity.item())
 
 def generate_test_model():
     """
