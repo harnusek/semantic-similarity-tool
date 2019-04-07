@@ -39,7 +39,7 @@ class TestKnowledgeMethods(unittest.TestCase):
         self.assertEqual(1, similarity_sentences("metóda", "metóda",False,False,False))
         self.assertEqual(0.4, similarity_sentences("metóda metóda", "metóda metóda N0TD3FIN3D metóda metóda",False,False,False))
         self.assertEqual(0, similarity_sentences("metóda", "N0TD3FIN3D",False,False,False))
-        self.assertEqual(0.2, similarity_sentences("My v tom máme jasno. A čo vy?", "Boli ste už voliť?",False,False,False))
+        self.assertEqual(0.1, similarity_sentences("My v tom máme jasno. A čo vy?", "Boli ste už voliť?",False,False,False))
         self.assertEqual(1.0, similarity_sentences("Compute similarity between two sentences.","Compute similarity between two sentences.",False,False,False))
 
     def test_similarity_matrix(self):

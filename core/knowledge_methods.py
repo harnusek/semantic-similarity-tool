@@ -63,13 +63,10 @@ def similarity_tokens(token1, token2, dictionary):
     :param dictionary:
     :return: similarity between token1 and token2
     """
-    if(token1 == token2):
-        return 1
-    set1 = set(dictionary[token1])
-    set2 = set(dictionary[token2])
-    set1.add(token1)
-    set2.add(token2)
-    return (1.0 if bool(set1 & set2) else 0.0)
+    if token1 == token2 or token1 in dictionary[token2] or token2 in dictionary[token1]:
+        return 1.0
+    else:
+        return 0.0
 
 def similarity_matrix(matrix):
     """

@@ -15,7 +15,7 @@ class TestApi(unittest.TestCase):
         headers = {'content-type': 'application/json'}
         response = requests.post(url, data=json.dumps(data), headers=headers)
         sim = float(response.content)
-        self.assertEqual(0.5, sim)
+        self.assertEqual(1, sim)
 
     def test_corpusSim(self):
         url = 'http://localhost:5000/api/corpusSim'
@@ -26,7 +26,7 @@ class TestApi(unittest.TestCase):
         headers = {'content-type': 'application/json'}
         response = requests.post(url, data=json.dumps(data), headers=headers)
         sim = float(response.content)
-        self.assertAlmostEqual(0.2768, sim)
+        self.assertAlmostEqual(0.2179, sim)
 
 if __name__ == '__main__':
     unittest.main()
