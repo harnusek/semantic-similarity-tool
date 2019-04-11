@@ -2,6 +2,7 @@
 
 import unittest
 import pandas as pd
+import numpy as np
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'core'))
 from knowledge_methods import update_dictionary
@@ -9,6 +10,7 @@ from knowledge_methods import fill_matrix
 from knowledge_methods import similarity_tokens
 from knowledge_methods import similarity_sentences
 from knowledge_methods import similarity_matrix
+from knowledge_methods import jaccard_matrix
 
 class TestKnowledgeMethods(unittest.TestCase):
     def test_update_dictionary(self):
@@ -61,6 +63,24 @@ class TestKnowledgeMethods(unittest.TestCase):
         self.assertEqual(0.5, similarity_matrix(matrix2))
         self.assertEqual(0.5, similarity_matrix(matrix3))
         self.assertAlmostEqual(0.3333333333333333, similarity_matrix(matrix4))
+
+    def test_jaccard_matrix(self):
+        matrix = pd.DataFrame(np.array([[0, 1, 0],
+                                        [0, 0, 0],
+                                        [1, 0, 0]]),
+                                        columns=['zem', 'ticho', 'ano'],
+                                        index=['potichu', 'nie', 'hlina'])
+        matrix = pd.DataFrame(np.array([
+            [0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+            [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+            [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+            [0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+            [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+            [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+            [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]]),
+            columns=["SME", "denník", "Slovensko", ",", "vzniknúť", "rok", "1993", "."],
+            index=["denník", "N", "slovenský", "denník", "internetový", "médium", "."])
+        print(similarity_matrix(matrix))
 
 if __name__ == '__main__':
     unittest.main()

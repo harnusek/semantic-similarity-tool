@@ -34,6 +34,7 @@ def update_dictionary(dictionary, word):
     :return: dictionary updated with word
     """
     if(word not in dictionary):
+        # print('Look up Azet!')
         url = 'https://slovnik.azet.sk/synonyma/?q=' + word
         page = requests.get(url)
         tree = html.fromstring(page.content)
@@ -85,6 +86,30 @@ def similarity_matrix(matrix):
         array = np.delete(array, i, 0)
         array = np.delete(array, j, 1)
     return count/long_len
+
+def jaccard_matrix(matrix):
+    """
+    :param matrix:
+    :return: similarity based on synonyms and Jaccard index
+    """
+    if matrix is None:
+        return None
+    columns = [x for x in matrix.columns.values]
+    index = [x for x in matrix.index.values]
+    if not columns or not index:
+        return 0.0
+
+    for c, col in enumerate(matrix.columns.values):
+        for i, ind in enumerate(matrix.index.values):
+            isSynonym = float(matrix.iloc[i][col])
+            # print(type(isSynonym),col,ind)
+            # print((isSynonym))
+            if(isSynonym):
+                columns[c] = index[i]
+    intersection = len(list(set(columns).intersection(index)))
+    union = (len(columns) + len(index)) - intersection
+    jaccard = float(intersection / union)
+    return jaccard
 
 def load_dictionary():
     """
