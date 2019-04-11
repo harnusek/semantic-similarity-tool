@@ -1,17 +1,15 @@
-# -*- coding: utf-8 -*-
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import requests
 import pandas as pd
+import numpy as np
 import json
 import os
 
 EMPTY_POS_TAGSET = ['default']
 SIMPLE_POS_TAGSET = ['V','S','A']               # slovesá, podstatné, prídavné
 FANCY_POS_TAGSET = ['V','S','A','P','N','D']    # slovesá, podstatné, prídavné, zámená, číslovky, príslovky
-
-
-
 
 def preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem):
     """
@@ -96,14 +94,35 @@ def generate_matrices(categorized):
     return matrices
 
 # post
-def avg_list(list):
+
+def similarity_matrix(matrix):
     """
-    :param list:
-    :return: final similarity from list
+    :param matrix:
+    :return: aggregated similarity from matrix
     """
-    list = [x for x in list if x is not None]
-    suma = sum(list)
-    lenth = len(list)
+    if matrix is None:
+        return None
+    array = matrix.values
+    long_len = max(array.shape)
+    short_len = min(array.shape)
+    count = 0
+    for _ in range(short_len):
+        i, j = np.unravel_index(array.argmax(), array.shape)
+        count = count + array[i, j]
+        array = np.delete(array, i, 0)
+        array = np.delete(array, j, 1)
+    return count/long_len
+
+def similarity_matrices(matrices):
+    """
+    :param matrices:
+    :return: average similarity of matrices
+    """
+    sim_list = [similarity_matrix(matrix) for matrix in matrices]
+
+    sim_list = [x for x in sim_list if x is not None]
+    suma = sum(sim_list)
+    lenth = len(sim_list)
     if lenth == 0:
         return 0
     average = round(suma/lenth, 4)

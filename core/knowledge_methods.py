@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 """
 Knowledge semantic similarity methods
@@ -11,7 +11,6 @@ import json
 import io
 import threading
 import os
-import numpy as np
 
 def similarity_sentences(sent_1,sent_2, use_stop, use_pos, use_lem):
     """
@@ -24,8 +23,8 @@ def similarity_sentences(sent_1,sent_2, use_stop, use_pos, use_lem):
     """
     matrices = common.preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem)
     matrices = [fill_matrix(matrix, dictionary) for matrix in matrices]
-    sim_list = [similarity_matrix(matrix) for matrix in matrices]
-    return common.avg_list(sim_list)
+    similarity = common.similarity_matrices(matrices)
+    return similarity
 
 def update_dictionary(dictionary, word):
     """
@@ -69,47 +68,28 @@ def similarity_tokens(token1, token2, dictionary):
     else:
         return 0.0
 
-def similarity_matrix(matrix):
-    """
-    :param matrix:
-    :return: aggregated similarity from matrix
-    """
-    if matrix is None:
-        return None
-    array = matrix.values
-    long_len = max(array.shape)
-    short_len = min(array.shape)
-    count = 0
-    for _ in range(short_len):
-        i, j = np.unravel_index(array.argmax(), array.shape)
-        count = count + array[i, j]
-        array = np.delete(array, i, 0)
-        array = np.delete(array, j, 1)
-    return count/long_len
-
-def jaccard_matrix(matrix):
-    """
-    :param matrix:
-    :return: similarity based on synonyms and Jaccard index
-    """
-    if matrix is None:
-        return None
-    columns = [x for x in matrix.columns.values]
-    index = [x for x in matrix.index.values]
-    if not columns or not index:
-        return 0.0
-
-    for c, col in enumerate(matrix.columns.values):
-        for i, ind in enumerate(matrix.index.values):
-            isSynonym = float(matrix.iloc[i][col])
-            # print(type(isSynonym),col,ind)
-            # print((isSynonym))
-            if(isSynonym):
-                columns[c] = index[i]
-    intersection = len(list(set(columns).intersection(index)))
-    union = (len(columns) + len(index)) - intersection
-    jaccard = float(intersection / union)
-    return jaccard
+# def jaccard_matrix(matrix,dictionary):
+#     """
+#     :param matrix:
+#     :return: similarity based on synonyms and Jaccard index
+#     """
+#     if matrix is None:
+#         return None
+#     columns = [x for x in matrix.columns.values]
+#     index = [x for x in matrix.index.values]
+#     if not columns or not index:
+#         return 0.0
+#     for c, col in enumerate(columns):
+#         for i, ind in enumerate(index):
+#             dictionary = update_dictionary(dictionary, col)
+#             dictionary = update_dictionary(dictionary, ind)
+#             isSynonym = similarity_tokens(col, ind, dictionary)
+#             if(isSynonym):
+#                 columns[c] = index[i]
+#     intersection = len(list(set(columns).intersection(index)))
+#     union = (len(columns) + len(index)) - intersection
+#     jaccard = float(intersection / union)
+#     return jaccard
 
 def load_dictionary():
     """

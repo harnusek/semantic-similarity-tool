@@ -1,5 +1,6 @@
-# -*- coding: utf-8 -*-
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 
 """
 Corpus semantic similarity methods
@@ -8,7 +9,6 @@ import common
 from gensim.models.keyedvectors import KeyedVectors
 import os
 from gensim.models import Word2Vec
-import numpy as np
 
 def similarity_sentences(sent_1,sent_2, use_stop, use_pos, use_lem):
     """
@@ -21,8 +21,8 @@ def similarity_sentences(sent_1,sent_2, use_stop, use_pos, use_lem):
     """
     matrices = common.preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem)
     matrices = [fill_matrix(matrix, model) for matrix in matrices]
-    sim_list = [similarity_matrix(matrix) for matrix in matrices]
-    return common.avg_list(sim_list)
+    similarity = common.similarity_matrices(matrices)
+    return similarity
 
 def load_model():
     """
@@ -60,24 +60,6 @@ def similarity_tokens(token1, token2, model):
     except KeyError:
         sim = 0
     return sim
-
-def similarity_matrix(matrix):
-    """
-    :param matrix:
-    :return: aggregated similarity from matrix
-    """
-    if matrix is None:
-        return None
-    array = matrix.values
-    long_len = max(array.shape)
-    short_len = min(array.shape)
-    count = 0
-    for _ in range(short_len):
-        i, j = np.unravel_index(array.argmax(), array.shape)
-        count = count + array[i, j]
-        array = np.delete(array, i, 0)
-        array = np.delete(array, j, 1)
-    return count/long_len
 
 # def vector_averaging_matrix(matrix):
 #     """

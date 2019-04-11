@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import unittest
@@ -9,8 +10,6 @@ from knowledge_methods import update_dictionary
 from knowledge_methods import fill_matrix
 from knowledge_methods import similarity_tokens
 from knowledge_methods import similarity_sentences
-from knowledge_methods import similarity_matrix
-from knowledge_methods import jaccard_matrix
 
 class TestKnowledgeMethods(unittest.TestCase):
     def test_update_dictionary(self):
@@ -37,50 +36,11 @@ class TestKnowledgeMethods(unittest.TestCase):
         self.assertEqual(0, similarity_tokens('N0TD3FIN3D', 'N0N3X1ST', dictionary))
 
     def test_similarity_sentences(self):
-        # self.skipTest('depending on configuration')
         self.assertEqual(1, similarity_sentences("metóda", "metóda",False,False,False))
         self.assertEqual(0.4, similarity_sentences("metóda metóda", "metóda metóda N0TD3FIN3D metóda metóda",False,False,False))
         self.assertEqual(0, similarity_sentences("metóda", "N0TD3FIN3D",False,False,False))
         self.assertEqual(0.1, similarity_sentences("My v tom máme jasno. A čo vy?", "Boli ste už voliť?",False,False,False))
         self.assertEqual(1.0, similarity_sentences("Compute similarity between two sentences.","Compute similarity between two sentences.",False,False,False))
-
-    def test_similarity_matrix(self):
-        matrix = pd.DataFrame([[0.3, 0.5],
-                              [0.6 , 0.9],
-                              [0.1, 0.7]])
-        matrix0 = pd.DataFrame([[0.5,0.4,0.1],
-                                [0.7,0.5,0.8],
-                                [0.8,0.6,0.1]])
-        matrix1 = pd.DataFrame([[1]])
-        matrix2 = pd.DataFrame([[1,0]])
-        matrix3 = pd.DataFrame([[1,0],
-                                [1,0]])
-        matrix4 = pd.DataFrame([[1,0,1],
-                                [1,0,0]])
-        self.assertAlmostEqual(0.4, similarity_matrix(matrix))
-        self.assertAlmostEqual(0.6666666666666666, similarity_matrix(matrix0))
-        self.assertEqual(1, similarity_matrix(matrix1))
-        self.assertEqual(0.5, similarity_matrix(matrix2))
-        self.assertEqual(0.5, similarity_matrix(matrix3))
-        self.assertAlmostEqual(0.3333333333333333, similarity_matrix(matrix4))
-
-    def test_jaccard_matrix(self):
-        matrix = pd.DataFrame(np.array([[0, 1, 0],
-                                        [0, 0, 0],
-                                        [1, 0, 0]]),
-                                        columns=['zem', 'ticho', 'ano'],
-                                        index=['potichu', 'nie', 'hlina'])
-        matrix = pd.DataFrame(np.array([
-            [0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-            [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-            [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-            [0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-            [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-            [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-            [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]]),
-            columns=["SME", "denník", "Slovensko", ",", "vzniknúť", "rok", "1993", "."],
-            index=["denník", "N", "slovenský", "denník", "internetový", "médium", "."])
-        print(similarity_matrix(matrix))
 
 if __name__ == '__main__':
     unittest.main()

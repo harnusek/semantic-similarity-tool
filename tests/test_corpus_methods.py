@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import unittest
@@ -8,7 +9,6 @@ from corpus_methods import similarity_sentences
 from corpus_methods import fill_matrix
 from corpus_methods import similarity_tokens
 from corpus_methods import generate_test_model
-from corpus_methods import similarity_matrix
 
 class TestCorpusMethods(unittest.TestCase):
     def test_fill_matrix(self):
@@ -26,26 +26,6 @@ class TestCorpusMethods(unittest.TestCase):
 
     def test_similarity_sentences(self):
         self.assertEqual(0.5, similarity_sentences('dom UND3FIN3D', 'dom', False, False, False))
-
-    def test_similarity_matrix(self):
-        matrix = pd.DataFrame([[0.3, 0.5],
-                              [0.6 , 0.9],
-                              [0.1, 0.7]])
-        matrix0 = pd.DataFrame([[0.5,0.4,0.1],
-                                [0.7,0.5,0.8],
-                                [0.8,0.6,0.1]])
-        matrix1 = pd.DataFrame([[1]])
-        matrix2 = pd.DataFrame([[1,0]])
-        matrix3 = pd.DataFrame([[1,0],
-                                [1,0]])
-        matrix4 = pd.DataFrame([[1,0,1],
-                                [1,0,0]])
-        self.assertAlmostEqual(0.4, similarity_matrix(matrix))
-        self.assertAlmostEqual(0.6666666666666666, similarity_matrix(matrix0))
-        self.assertEqual(1, similarity_matrix(matrix1))
-        self.assertEqual(0.5, similarity_matrix(matrix2))
-        self.assertEqual(0.5, similarity_matrix(matrix3))
-        self.assertAlmostEqual(0.3333333333333333, similarity_matrix(matrix4))
 
 if __name__ == '__main__':
     unittest.main()

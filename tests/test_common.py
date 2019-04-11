@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import unittest
@@ -8,7 +9,8 @@ from common import preprocessing
 from common import sentence_analysis
 from common import categorize_sentences
 from common import generate_matrices
-from common import avg_list
+from common import similarity_matrix
+from common import similarity_matrices
 
 class TestCommon(unittest.TestCase):
 # pre
@@ -59,11 +61,28 @@ class TestCommon(unittest.TestCase):
         for e, a in zip(matrices, generate_matrices(categorized)):
             self.assertTrue(pd.DataFrame.equals(e, a))
 # post
-    def test_avg_list(self):
-        self.assertEqual(0, avg_list([0]))
-        self.assertEqual(9, avg_list([9]))
-        self.assertEqual(1.3333, avg_list([3,0,1]))
-        self.assertEqual(2, avg_list([0, 1, 2, 3, 4]))
+    def test_similarity_matrix(self):
+        matrix = pd.DataFrame([[0.3, 0.5],
+                              [0.6 , 0.9],
+                              [0.1, 0.7]])
+        matrix0 = pd.DataFrame([[0.5,0.4,0.1],
+                                [0.7,0.5,0.8],
+                                [0.8,0.6,0.1]])
+        matrix1 = pd.DataFrame([[1]])
+        matrix2 = pd.DataFrame([[1,0]])
+        matrix3 = pd.DataFrame([[1,0],
+                                [1,0]])
+        matrix4 = pd.DataFrame([[1,0,1],
+                                [1,0,0]])
+        self.assertAlmostEqual(0.4, similarity_matrix(matrix))
+        self.assertAlmostEqual(0.6666666666666666, similarity_matrix(matrix0))
+        self.assertEqual(1, similarity_matrix(matrix1))
+        self.assertEqual(0.5, similarity_matrix(matrix2))
+        self.assertEqual(0.5, similarity_matrix(matrix3))
+        self.assertAlmostEqual(0.3333333333333333, similarity_matrix(matrix4))
+
+    def test_similarity_matrices(self):
+        self.skipTest('todo')
 
 if __name__ == '__main__':
     unittest.main()
