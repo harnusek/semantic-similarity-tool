@@ -1,6 +1,13 @@
 # SimilariTexTool 
 ## A tool for determining the semantic similarity of texts
 
+### Requires files:
+```
+core/dara/[SK]prim-6.1-public-all.shuffled.080cbow.bin
+core/dara/stop_words_SK.txt
+```
+
+
 ### For the first start run `initialize.sh` script:
 ```
 echo 'Installing requirements.'
