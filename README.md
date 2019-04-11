@@ -1,2 +1,7 @@
-# SimilariTexTool
-A tool for determining the similarity of texts
+# SimilariTexTool 
+## A tool for determining the semantic similarity of texts
+
+### First start:
+```
+sh ./initialize.sh
+```
