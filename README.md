@@ -3,8 +3,8 @@
 
 ### Required sources:
 ```
-core/data/[SK]prim-6.1-public-all.shuffled.080cbow.bin
-core/data/stop_words_SK.txt
+core/sources/[SK]prim-6.1-public-all.shuffled.080cbow.bin
+core/sources/stop_words_SK.txt
 ```
 
 

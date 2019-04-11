@@ -14,6 +14,10 @@ from common import similarity_matrices
 
 class TestCommon(unittest.TestCase):
 # pre
+    def test_existence_of_sources(self):
+        self.assertTrue(os.path.isfile('../core/sources/[SK]prim-6.1-public-all.shuffled.080cbow.bin'), '[SK]prim-6.1-public-all.shuffled.080cbow.bin is required!')
+        self.assertTrue(os.path.isfile('../core/sources/stop_words_SK.txt'), 'stop_words_SK.txt is required!')
+
     def test_preprocessing(self):
         sent_1 = "Koľko dní?"
         sent_2 = "Aký je?"
@@ -82,7 +86,13 @@ class TestCommon(unittest.TestCase):
         self.assertAlmostEqual(0.3333333333333333, similarity_matrix(matrix4))
 
     def test_similarity_matrices(self):
-        self.skipTest('todo')
+        matrix = pd.DataFrame([[0.3, 0.5],
+                              [0.6 , 0.9],
+                              [0.1, 0.7]])
+        matrix1 = pd.DataFrame([[1]])
+        matrix2 = pd.DataFrame([[1,0]])
+        matrices = [matrix, matrix1, matrix2]
+        self.assertEqual(0.6333, similarity_matrices(matrices))
 
 if __name__ == '__main__':
     unittest.main()

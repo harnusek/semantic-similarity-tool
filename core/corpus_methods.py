@@ -27,9 +27,9 @@ def load_model():
     """
     :return: w2v model
     """
-    fname = 'core/data/[SK]prim-6.1-public-all.shuffled.080cbow.bin'
-    # fname = 'core/data/[SK]prim-6.1-public-all.shuffled.200cbow.bin'
-    # fname = 'core/data/[SK]prim-6.1-public-all.shuffled.300cbow.bin'
+    fname = 'core/sources/[SK]prim-6.1-public-all.shuffled.080cbow.bin'
+    # fname = 'core/sources/[SK]prim-6.1-public-all.shuffled.200cbow.bin'
+    # fname = 'core/sources/[SK]prim-6.1-public-all.shuffled.300cbow.bin'
     model = KeyedVectors.load_word2vec_format(fname, binary=True)
     return model
 
@@ -89,5 +89,5 @@ if(os.getcwd().split(os.sep)[-1] != 'tests'):
     model = load_model()
 else:
     model = generate_test_model()
-    # fname = '../core/data/[SK]prim-6.1-public-all.shuffled.080cbow.bin'
+    # fname = '../core/sources/[SK]prim-6.1-public-all.shuffled.080cbow.bin'
     # model = KeyedVectors.load_word2vec_format(fname, binary=True)
