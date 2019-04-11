@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script type = "text/javascript" src = "home.js" ></script>
+    <script type = "text/javascript" src = "maybe-good-home.js" ></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>STT</title>
@@ -40,23 +40,23 @@
   </div>
 </form>
 
-<input type = "button" class="btn btn-primary" onclick = "printSimilarity(document.getElementById('inputSent1').value, 
-                                                                document.getElementById('inputSent2').value,
-                                                                document.getElementById('inputMethod').value,
-                                                                document.getElementById('checkLem').checked,
-                                                                document.getElementById('checkPos').checked,
-                                                                document.getElementById('checkStop').checked)" value = "Vypočítaj podobnosť" />
+<!--<input type = "button" class="btn btn-primary" onclick = "printSimilarity(document.getElementById('inputSent1').value, -->
+                                                                <!--document.getElementById('inputSent2').value,-->
+                                                                <!--document.getElementById('inputMethod').value,-->
+                                                                <!--document.getElementById('checkLem').checked,-->
+                                                                <!--document.getElementById('checkPos').checked,-->
+                                                                <!--document.getElementById('checkStop').checked)" value = "Vypočítaj podobnosť" />-->
 
-<!-- <button type="button" class="btn btn-primary"
-onclick="document.getElementById('ouput').innerHTML = myFunction(document.getElementById('inputSent1').value, 
+<button type="button" class="btn btn-primary"
+onclick="document.getElementById('ouput').innerHTML = printSimilarity(document.getElementById('inputSent1').value,
                                                                 document.getElementById('inputSent2').value,
                                                                 document.getElementById('inputMethod').value,
                                                                 document.getElementById('checkLem').checked,
                                                                 document.getElementById('checkPos').checked,
                                                                 document.getElementById('checkStop').checked)">
 Vypočítaj podobnosť</button>
- -->
-<!-- <p id="ouput"></p> -->
+
+ <p id="ouput"></p>
 
 
 <footer class="footer navbar-inverse">

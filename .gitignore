@@ -3,3 +3,4 @@ venv/
 .idea/
 logs.log
 *.bin
+core/sources/synonym_dictionary.json
