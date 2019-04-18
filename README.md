@@ -1,4 +1,4 @@
-# SimilariTexTool 
+# semantic-similarity-tool 
 ## A tool for determining the semantic similarity of texts
 
 ### Required sources:
