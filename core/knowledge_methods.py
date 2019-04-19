@@ -110,7 +110,7 @@ def save_dictionary():
     with io.open('core/sources/synonym_dictionary.json', 'w', encoding='utf8') as json_file:
         json.dump(dictionary, json_file, ensure_ascii=False)
 
-if(os.getcwd().split(os.sep)[-1] != 'tests'):
+if(os.getcwd().split(os.sep)[-1] == 'core'):
     dictionary = load_dictionary()
     save_dictionary()
 else:

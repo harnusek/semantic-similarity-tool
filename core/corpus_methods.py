@@ -85,7 +85,7 @@ def generate_test_model():
     model = Word2Vec(texts, size=2, window=1, min_count=1, workers=4)
     return model
 
-if(os.getcwd().split(os.sep)[-1] != 'tests'):
+if(os.getcwd().split(os.sep)[-1] == 'core'):
     model = load_model()
 else:
     model = generate_test_model()
