@@ -128,7 +128,7 @@ def similarity_matrices(matrices):
     average = round(suma/lenth, 4)
     return average
 
-if(os.getcwd().split(os.sep)[-1] == 'core'):
+if(os.getcwd().split(os.sep)[-1] != 'tests'):
     stop_words = load_stop_words()
 else:
     stop_words = set(['a','i','aby'])
