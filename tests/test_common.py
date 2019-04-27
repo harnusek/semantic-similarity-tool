@@ -15,7 +15,7 @@ from common import similarity_matrices
 class TestCommon(unittest.TestCase):
 # pre
     def test_existence_of_sources(self):
-        self.assertTrue(os.path.isfile('../core/sources/[SK]prim-6.1-public-all.shuffled.080cbow.bin'), '[SK]prim-6.1-public-all.shuffled.080cbow.bin is required!')
+        self.assertTrue(os.path.isfile('../core/sources/w2v_model.bin'), 'w2v_model.bin is required!')
         self.assertTrue(os.path.isfile('../core/sources/stop_words_SK.txt'), 'stop_words_SK.txt is required!')
 
     def test_preprocessing(self):
