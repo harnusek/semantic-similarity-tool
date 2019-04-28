@@ -7,7 +7,7 @@ import numpy as np
 import json
 import os
 
-EMPTY_POS_TAGSET = ['default']
+EMPTY_POS_TAGSET = ['all_tags_in_one_matrix']
 SIMPLE_POS_TAGSET = ['V','S','A']               # slovesá, podstatné, prídavné
 FANCY_POS_TAGSET = ['V','S','A','P','N','D']    # slovesá, podstatné, prídavné, zámená, číslovky, príslovky
 
@@ -23,7 +23,7 @@ def preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem):
     analysed_sent_1 = sentence_analysis(sent_1, use_stop, use_lem)
     analysed_sent_2 = sentence_analysis(sent_2, use_stop, use_lem)
 
-    pos_tagset = SIMPLE_POS_TAGSET if use_pos else EMPTY_POS_TAGSET
+    pos_tagset = FANCY_POS_TAGSET if use_pos else EMPTY_POS_TAGSET
     categorized = categorize_sentences(analysed_sent_1, analysed_sent_2, pos_tagset)
 
     matrices = generate_matrices(categorized)
