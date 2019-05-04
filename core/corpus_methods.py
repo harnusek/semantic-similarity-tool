@@ -4,7 +4,8 @@
 """
 Corpus semantic similarity methods
 """
-import common
+from common import preprocessing
+from common import similarity_matrices
 from gensim.models.keyedvectors import KeyedVectors
 import os
 from gensim.models import Word2Vec
@@ -18,9 +19,9 @@ def similarity_sentences(sent_1,sent_2, use_stop, use_pos, use_lem):
     :param use_lem:
     :return: similarity between sent_1 and sent_2
     """
-    matrices = common.preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem)
+    matrices = preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem)
     matrices = [fill_matrix(matrix, model) for matrix in matrices]
-    similarity = common.similarity_matrices(matrices)
+    similarity = similarity_matrices(matrices)
     return similarity
 
 def load_model():
@@ -51,7 +52,7 @@ def similarity_tokens(token1, token2, model):
     :param token1:
     :param token2:
     :param model:
-    :return: similarity between token1 and token2
+    :return: cosine similarity between token1 and token2
     """
     if(token1 == token2):
         return 1
@@ -60,23 +61,6 @@ def similarity_tokens(token1, token2, model):
     except KeyError:
         sim = 0
     return sim
-
-# def vector_averaging_matrix(matrix):
-#     """
-#     :param matrix:
-#     :r: similarity based on averaging w2v vectors
-#     """
-#     if matrix is None:
-#         return None
-#     sent_1 = [word for word in matrix.columns.values if word in model.vocab]
-#     sent_2 = [word for word in matrix.index.values if word in model.vocab]
-#     if not sent_1 or not sent_2:
-#         return 0.0
-#     vect_1 =  np.mean(model[sent_1], axis=0)
-#     vect_2 =  np.mean(model[sent_2], axis=0)
-#     cosine_similarity = np.dot(vect_1, vect_2) / (
-#             np.linalg.norm(vect_1) * np.linalg.norm(vect_2))
-#     return float(cosine_similarity.item())
 
 def generate_test_model():
     """
@@ -90,5 +74,3 @@ if(os.getcwd().split(os.sep)[-1] != 'tests'):
     model = load_model()
 else:
     model = generate_test_model()
-    # fname = '../core/sources/w2v_model.bin'
-    # model = KeyedVectors.load_word2vec_format(fname, binary=True)

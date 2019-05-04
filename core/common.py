@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Functions used in determining similarity of texts
+"""
 import requests
 import pandas as pd
 import numpy as np
@@ -75,7 +78,6 @@ def categorize_sentences(analysed_sent_1, analysed_sent_2, pos_tagset):
                 splited[index][i].append(pair['word'])
             if(len(pos_tagset) == 1):
                 splited[0][i].append(pair['word'])
-    # print(splited)
     return splited
 
 def generate_matrices(categorized):
@@ -92,8 +94,6 @@ def generate_matrices(categorized):
         else:
             matrices.append(None)
     return matrices
-
-# post
 
 def similarity_matrix(matrix):
     """

@@ -13,7 +13,6 @@ from common import similarity_matrix
 from common import similarity_matrices
 
 class TestCommon(unittest.TestCase):
-# pre
     def test_existence_of_sources(self):
         self.assertTrue(os.path.isfile('../core/sources/w2v_model.bin'), 'w2v_model.bin is required!')
         self.assertTrue(os.path.isfile('../core/sources/stop_words_SK.txt'), 'stop_words_SK.txt is required!')
@@ -64,7 +63,7 @@ class TestCommon(unittest.TestCase):
         matrices = [pd.DataFrame(columns=tokens1, index= tokens2).apply(pd.to_numeric, errors='coerce')]
         for e, a in zip(matrices, generate_matrices(categorized)):
             self.assertTrue(pd.DataFrame.equals(e, a))
-# post
+
     def test_similarity_matrix(self):
         matrix = pd.DataFrame([[0.3, 0.5],
                               [0.6 , 0.9],

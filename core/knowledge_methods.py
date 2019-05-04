@@ -4,7 +4,8 @@
 """
 Knowledge semantic similarity methods
 """
-import common
+from common import preprocessing
+from common import similarity_matrices
 from lxml import html
 import requests
 import json
@@ -21,9 +22,9 @@ def similarity_sentences(sent_1,sent_2, use_stop, use_pos, use_lem):
     :param use_lem:
     :return: similarity between sent_1 and sent_2
     """
-    matrices = common.preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem)
+    matrices = preprocessing(sent_1,sent_2, use_stop, use_pos, use_lem)
     matrices = [fill_matrix(matrix, dictionary) for matrix in matrices]
-    similarity = common.similarity_matrices(matrices)
+    similarity = similarity_matrices(matrices)
     return similarity
 
 def update_dictionary(dictionary, word):
@@ -67,29 +68,6 @@ def similarity_tokens(token1, token2, dictionary):
         return 1.0
     else:
         return 0.0
-
-# def jaccard_matrix(matrix,dictionary):
-#     """
-#     :param matrix:
-#     :return: similarity based on synonyms and Jaccard index
-#     """
-#     if matrix is None:
-#         return None
-#     columns = [x for x in matrix.columns.values]
-#     index = [x for x in matrix.index.values]
-#     if not columns or not index:
-#         return 0.0
-#     for c, col in enumerate(columns):
-#         for i, ind in enumerate(index):
-#             dictionary = update_dictionary(dictionary, col)
-#             dictionary = update_dictionary(dictionary, ind)
-#             isSynonym = similarity_tokens(col, ind, dictionary)
-#             if(isSynonym):
-#                 columns[c] = index[i]
-#     intersection = len(list(set(columns).intersection(index)))
-#     union = (len(columns) + len(index)) - intersection
-#     jaccard = float(intersection / union)
-#     return jaccard
 
 def load_dictionary():
     """
