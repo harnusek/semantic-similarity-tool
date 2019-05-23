@@ -55,7 +55,7 @@ def load_stop_words():
     """
     :return: dictionary of stop words
     """
-    with open('stop_words_SK.txt', 'r', encoding='utf-8') as file:
+    with open('sources/stop_words_SK.txt', 'r', encoding='utf-8') as file:
         stop_words = set(word.rstrip() for word in file)
     return stop_words
 
