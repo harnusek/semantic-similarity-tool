@@ -3,8 +3,8 @@
 import sys, os
 from flask import make_response, abort
 import knowledge_methods
-# import corpus_methods
-result = 'HelloWorld!'
+import corpus_methods
+
 def POST_knowledge_similarity(params):
     """
     This function call core tool.
@@ -38,7 +38,7 @@ def POST_corpus_similarity(params):
     use_stop = params.get("use_stop", True)
     use_pos = params.get("use_pos", False)
     use_lem = params.get("use_lem", False)
-    # result = corpus_methods.similarity_sentences(sent_1,sent_2, use_stop, use_pos, use_lem)
+    result = corpus_methods.similarity_sentences(sent_1,sent_2, use_stop, use_pos, use_lem)
     if result is not None:
         return result, 201
     else:

@@ -96,7 +96,7 @@ def load_dictionary():
     :return: cached dictionary of synonyms
     """
     try:
-        with open('sources/synonym_dictionary.json', 'r', encoding="utf8") as json_file:
+        with open('synonym_dictionary.json', 'r', encoding="utf8") as json_file:
             json_str = json_file.read()
             return json.loads(json_str)
     except FileNotFoundError:
@@ -107,7 +107,7 @@ def save_dictionary():
     Save dictionary of synonyms to file
     """
     threading.Timer(300.0, save_dictionary).start()
-    with io.open('sources/synonym_dictionary.json', 'w', encoding='utf8') as json_file:
+    with io.open('synonym_dictionary.json', 'w', encoding='utf8') as json_file:
         json.dump(dictionary, json_file, ensure_ascii=False)
 
 if(os.getcwd().split(os.sep)[-1] != 'tests'):
