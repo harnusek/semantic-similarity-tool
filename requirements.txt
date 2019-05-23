@@ -9,4 +9,3 @@ pyasn1
 gensim
 werkzeug
 gunicorn
-paramiko
