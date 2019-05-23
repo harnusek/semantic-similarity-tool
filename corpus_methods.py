@@ -27,7 +27,7 @@ def load_model():
     """
     :return: w2v model
     """
-    fname = 'core/sources/w2v_model.bin'
+    fname = 'sources/w2v_model.bin'
     # fname = 'core/sources/[SK]prim-6.1-public-all.shuffled.080cbow.bin'
     # fname = 'core/sources/[SK]prim-6.1-public-all.shuffled.200cbow.bin'
     # fname = 'core/sources/[SK]prim-6.1-public-all.shuffled.300cbow.bin'
