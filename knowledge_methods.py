@@ -112,6 +112,6 @@ def save_dictionary():
 
 if(os.getcwd().split(os.sep)[-1] != 'tests'):
     dictionary = load_dictionary()
-    save_dictionary()
+    # save_dictionary()
 else:
     dictionary = dict()
